@@ -82,4 +82,16 @@ class StravaAPIKud:
 
     @tojson
     def getAthlete(self, goiburuak={}):
+        {}
         return self.http.request('GET', self.host + "/athlete", None, goiburuak)
+
+    @tojson
+    def getActivities(self, goiburuak={}):
+        {}
+        return self.http.request('GET', self.host + "/activities", None, goiburuak)
+
+
+    @tojson
+    def getActivityId(self, id, goiburuak={}):
+        dict = {}
+        return self.http.request('GET', self.host + "/activities/"+str(id), dict, goiburuak)
