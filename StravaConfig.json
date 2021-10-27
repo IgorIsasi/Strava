@@ -1,5 +1,10 @@
 {
-    "ClientID": ,
-    "ClientSecret": ,
+    "ClientID": "73501",
+    "ClientSecret": "6efbc96ae608e46b4bb2105ae7ce372a6d20687f",
+    "access_token": "0700bc9c92cbc2330b613a1b84de1d17af2bd09f",
+    "code": "a0b45ac347f9b9d14bbb8d2653e63cc881c59bb9",
+    "expires_at": 1635348348,
+    "refresh_token": "022f1a145ad915958b5439ddd61c44f5ec9042ec",
     "scope": "read,activity\\:read_all,profile\\:read_all,read_all",
+    "token_type": "Bearer"
 }
