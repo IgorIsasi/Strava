@@ -29,11 +29,29 @@ def getActivitiesID():
     ac = stravaApiKud.getActivityId(em[0]["id"])
     print(ac["name"], ac["type"], ac["distance"])
 
+def getAthlete():
+    print("---------------------------------------------")
+    atleta=stravaApiKud.getAthlete()
+    print("Izena: ",atleta['firstname'])
+    print("Abizena: ",atleta['lastname'])
+    print("Sexua: ",atleta['sex'])
+    print("Oinetakoak: ",atleta['shoes'][0]['name'])
+    print("Jarraitzaileak: ",atleta['follower_count'])
+    print("---------------------------------------------")
+
+
+
+
+#def getActivitiesIDStream():
+
 
 
 if __name__ == '__main__':
     stravaApiKud.getAccessToTheAPI()
+    getAthlete()
     getActivities()
     getActivitiesID()
+    getActivitiesIDStreams()
 
     
+
