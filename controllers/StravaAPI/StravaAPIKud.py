@@ -88,6 +88,7 @@ class StravaAPIKud:
     @tojson    
     def getActivities(self, parametroak,goiburuak={}):
         return self.http.request('GET', self.host + "/athlete/activities/", parametroak, goiburuak)
+         
 
 
     @tojson

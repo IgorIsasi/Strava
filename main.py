@@ -19,19 +19,9 @@ def getActivities():
         yesterday=today-datetime.timedelta(days=egunak) #Atzoko data eta ordua
         yesterday=yesterday.timestamp() #Atzoko timestamp
         parametroak={'after':yesterday}# 'before':50, 'page':1, 'per_page':5}
-        r=stravaApiKud.getActivities(parametroak)
-        print("-------------------------------------------------")
-        for entrenamendua in r:
-            print("Id: ", entrenamendua['id'])
-            print("Izena: ",entrenamendua['name'])
-            print("Data: ",entrenamendua['start_date_local'])
-            print("Mota: ",entrenamendua['type'])
-            print("Ikusgarritasuna: ",entrenamendua['visibility'])
-            print("Distantzia: ", entrenamendua['distance'])
-            print("Batazbesteko abiadura: ", entrenamendua['average_speed'])
-            print("Abiadura maximoa: ",entrenamendua['max_speed'])
-            print("Pultsometroa: ",entrenamendua['has_heartrate'])
-            print("-------------------------------------------------")
+        datuak=stravaApiKud.getActivities(parametroak)
+        bidaltzekoDatuak={}
+        bidaltzekoDatuak['izena']=datuak
 
             
 
@@ -50,7 +40,7 @@ def getActivitiesID(id):
 
 
 
-def getActivitiesIDStream():
+
 
 
 
@@ -58,8 +48,8 @@ if __name__ == '__main__':
     stravaApiKud.getAccessToTheAPI()
     getAthlete()
     getActivities()
-    getActivitiesID(6202857865)
-    getActivitiesIDStreams()
+    #getActivitiesID(6202857865)
+    #getActivitiesIDStreams()
 
     
 
