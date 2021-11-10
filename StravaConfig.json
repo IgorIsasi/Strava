@@ -6,5 +6,5 @@
     "expires_at": 1636561016,
     "refresh_token": "218f4f1b70d07fa778d951d271d3134cf949a539",
     "scope": "read,activity\\:read_all,profile\\:read_all,read_all",
-    "token_type": "Bearer"
+    "token_type": "Bearer" 
 }
