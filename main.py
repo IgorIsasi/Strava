@@ -19,9 +19,40 @@ def getActivities():
         yesterday=today-datetime.timedelta(days=egunak) #Atzoko data eta ordua
         yesterday=yesterday.timestamp() #Atzoko timestamp
         parametroak={'after':yesterday}# 'before':50, 'page':1, 'per_page':5}
-        datuak=stravaApiKud.getActivities(parametroak)
+        jarduerak=stravaApiKud.getActivities(parametroak)
         bidaltzekoDatuak={}
-        bidaltzekoDatuak['izena']=datuak
+        for jarduera in jarduerak:
+            jardueraXehetasunekin=getActivitiesById(jarduera['id'])
+            bidaltzekoDatuak['mota']=jardueraXehetasunekin['type']
+            bidaltzekoDatuak['hasieraData']=jardueraXehetasunekin['start_date']
+            bidaltzekoDatuak['denbora']=jardueraXehetasunekin['elapsed_time']
+            #TODO bidaltzekoDatuak['bukaeraData']=dateToSecs(bidaltzekoDatuak['hasieraData'])
+            bidaltzekoDatuak['ikusgarritasuna']=jardueraXehetasunekin['visibility']
+            bidaltzekoDatuak['bzbAbiadura']=jardueraXehetasunekin['average_speed']
+            bidaltzekoDatuak['maxAbiadura']=jardueraXehetasunekin['max_speed']
+            bidaltzekoDatuak['ekipamenduaID']=jardueraXehetasunekin['gear_id']
+        bidaltzekoDatuak={}
+
+        #ENTRENAMENDURAKO
+        for i in range(0,len(datuak)):
+            
+            print(bidaltzekoDatuak)
+            if(datuak[i]['gear_id'] is not None):
+                emaitza=stravaApiKud.getEkipamendua(datuak[i]['gear_id'])
+                
+
+            div()
+
+            
+            
+            
+            #TODO datuak bidali INSERT INTO entrenamenduak VALUES ...
+
+        #JARRAITZAILERAKO
+
+
+def div():
+    print("-------------------------------------------------------")
 
             
 
@@ -31,6 +62,7 @@ def getActivitiesID(id):
     print("Izena: ",entrenamendua['name'])
     print("Data: ",entrenamendua['start_date_local'])
     print("Mota: ",entrenamendua['type'])
+    print("Denbora: "),entrenamendua['']
     print("Ikusgarritasuna: ",entrenamendua['visibility'])
     print("Distantzia: ", entrenamendua['distance'])
     print("Batazbesteko abiadura: ", entrenamendua['average_speed'])
@@ -46,16 +78,21 @@ def getActivitiesID(id):
 
 if __name__ == '__main__':
     stravaApiKud.getAccessToTheAPI()
-    print(stravaApiKud.getAthlete())
-    em = stravaApiKud.getActivities()
-    ac = stravaApiKud.getActivityId(em[0]["id"])
-    print(ac["name"], ac["type"], ac["distance"])
-    astr = stravaApiKud.getActivityStreams(em[0]["id"])
-    print(astr)
-    getAthlete()
+    #print(stravaApiKud.getAthlete())
+    em = stravaApiKud.getActivities({})
+    #ac = stravaApiKud.getActivityId(em[0]["id"])
+    #print(ac["name"], ac["type"], ac["distance"])
+    #astr = stravaApiKud.getActivityStreams(em[0]["id"])
+    #print(astr)
+    #getAthlete()
     getActivities()
+    #print(stravaApiKud.getActivityLaps(em[0]['id']))
+
+    for i in range(0,len(em)):
+        com = stravaApiKud.getCommentsByActivityId(em[i]["id"])
+        print(com)
+    
     #getActivitiesID(6202857865)
     #getActivitiesIDStreams()
 
     
-
