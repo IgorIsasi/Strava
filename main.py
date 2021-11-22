@@ -22,7 +22,9 @@ def getActivities():
         jarduerak=stravaApiKud.getActivities(parametroak)
         bidaltzekoDatuak={}
         for jarduera in jarduerak:
-            jardueraXehetasunekin=getActivitiesById(jarduera['id'])
+            print(jarduera)
+            jardueraXehetasunekin=getActivitiesId(jarduera['id'])
+            
             bidaltzekoDatuak['mota']=jardueraXehetasunekin['type']
             bidaltzekoDatuak['hasieraData']=jardueraXehetasunekin['start_date']
             bidaltzekoDatuak['denbora']=jardueraXehetasunekin['elapsed_time']
@@ -56,13 +58,13 @@ def div():
 
             
 
-def getActivitiesID(id):
+def getActivitiesId(id):
     entrenamendua = stravaApiKud.getActivityId(id)
     print("Id: ", entrenamendua['id'])
     print("Izena: ",entrenamendua['name'])
     print("Data: ",entrenamendua['start_date_local'])
     print("Mota: ",entrenamendua['type'])
-    print("Denbora: "),entrenamendua['']
+    print("Denbora: "),entrenamendua['elapsed_time']
     print("Ikusgarritasuna: ",entrenamendua['visibility'])
     print("Distantzia: ", entrenamendua['distance'])
     print("Batazbesteko abiadura: ", entrenamendua['average_speed'])
