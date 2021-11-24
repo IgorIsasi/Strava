@@ -100,7 +100,7 @@ class StravaAPIKud:
     def getActivityStreams(self, id, keys=["time", "distance", "lating", "altitude", "velocity_smooth",  "heartrate", "cadence", "watts", "temp", "moving", "grade_smooth"], goiburuak={}):
         dict = {"keys":",".join(keys), "key_by_type":True}
         return self.http.request('GET', self.host + "/activities/" + str(id) + "/streams", dict, goiburuak)
-        ll
+        
 
     @tojson
     def getActivityLaps(self, id, goiburuak={}):
@@ -117,3 +117,7 @@ class StravaAPIKud:
     def getCommentsByActivityId(self, id, goiburuak={}):
         dict = {}
         return self.http.request('GET', self.host + "/activities/" + str(id) + "/comments", dict, goiburuak)
+
+    
+
+    

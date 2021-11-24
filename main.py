@@ -35,6 +35,8 @@ def getActivitiesId(id):
 
     kudos=stravaApiKud.getCommentsByActivityId(jardueraXehetasunekin["id"])
     bidaltzekoDatuak={}
+    heartrateDauka=jardueraXehetasunekin['has_heartrate']
+    
 
     #ENTRENAMENDURAKO
     bidaltzekoDatuak["id"]=jardueraXehetasunekin['id']
@@ -45,21 +47,29 @@ def getActivitiesId(id):
     #TODO bidaltzekoDatuak['bukaeraData']=dateToSecs(bidaltzekoDatuak['hasieraData'])
     bidaltzekoDatuak['distantzia']=jardueraXehetasunekin['distance']
     bidaltzekoDatuak['ikusgarritasuna']=jardueraXehetasunekin['visibility']
-    bidaltzekoDatuak['bzbAbiadura']=jardueraXehetasunekin['average_speed']
-    bidaltzekoDatuak['maxAbiadura']=jardueraXehetasunekin['max_speed']
+    bidaltzekoDatuak['abiaduraBzb']=jardueraXehetasunekin['average_speed']
+    bidaltzekoDatuak['abiaduraMax']=jardueraXehetasunekin['max_speed']
     bidaltzekoDatuak['komentarioak']=[]
     bidaltzekoDatuak['bueltak']=[]
+    bidaltzekoDatuak['segmentuak']=[]
     bidaltzekoDatuak['ekipamendua']={}
     unekoKomentarioa={}
     
 
     #KUDOS-ERAKO
     for komentario in kudos:
-        unekoKomentarioa['komentarioIgorleId']=komentario['id']
-        unekoKomentarioa['komentarioIgorleIzena']=komentario["athlete"]["firstname"]
-        unekoKomentarioa['komentarioIgorleAbizena']=komentario["athlete"]["lastname"]
+        
+        #KOMENTARIOETARAKO
+        unekoKomentarioa['komentarioId']=komentario['id']
         unekoKomentarioa['komentarioTestua']=komentario["text"]
         unekoKomentarioa['komentarioData']=komentario["created_at"]
+
+        #JARRAITZAILERAKO
+        unekoKomentarioa['komentarioIgorleIzena']=komentario["athlete"]["firstname"]
+        unekoKomentarioa['komentarioIgorleAbizena']=komentario["athlete"]["lastname"]
+        
+
+        
         bidaltzekoDatuak["komentarioak"].append(unekoKomentarioa)
 
     
@@ -72,40 +82,39 @@ def getActivitiesId(id):
         bidaltzekoDatuak['ekipamendua']['izena']=ekipamendua['nickname']
         bidaltzekoDatuak['ekipamendua']['distantzia']=ekipamendua['converted_distance']
 
-    #BUELTETARAKO
-    bueltak=stravaApiKud.getActivityLaps(id)
+    #BUELTETARAKO  //TODO BERRIRO PLANTEATU
+    bueltak=jardueraXehetasunekin['laps']
     for buelta in bueltak:
-        print(buelta)
         unekoBuelta={}
         unekoBuelta['medizioak']={}
         unekoBuelta['id']=buelta['id']
         unekoBuelta['izena']=buelta['name']
         unekoBuelta['distantzia']=buelta['distance']
         unekoBuelta['denbora']=buelta['elapsed_time']
-        unekoBuelta['medizioak']['hasieraData']=buelta['start_date_local']
+        unekoBuelta['medizioak']['dataOrdua']=buelta['start_date_local']
         unekoBuelta['medizioak']['abiaduraBzb']=buelta['average_speed']
         unekoBuelta['medizioak']['abiaduraMax']=buelta['max_speed']
-        unekoBuelta['medizioak']['pultsazioBzb']=buelta['average_heartrate']
-        unekoBuelta['medizioak']['pultsazioMax']=buelta['max_heartrate']
+        if(heartrateDauka):
+            unekoBuelta['medizioak']['pultsazioBzb']=buelta['average_heartrate']
+            unekoBuelta['medizioak']['pultsazioMax']=buelta['max_heartrate']
         bidaltzekoDatuak['bueltak'].append(unekoBuelta)
+
+
+    #SEGMENTUETARAKO
+    segmentuak=jardueraXehetasunekin['segment_efforts']
+    for segmentua in segmentuak:
+        unekoSegmentua={}
+        unekoSegmentua['id']=segmentua['segment']['id']
+        unekoSegmentua['izena']=segmentua['segment']['name']
+        unekoSegmentua['distantzia']=segmentua['segment']['distance']   
+        unekoSegmentua['hasieraData']=segmentua['start_date_local']
+        unekoSegmentua['denbora']=segmentua['elapsed_time']
+        bidaltzekoDatuak['segmentuak'].append(unekoSegmentua)
+
     
 
-
-
-
-        
-    
-
-
-
-
-
-
-    
-
-
+    print(bidaltzekoDatuak)
     div()
-
     
 
 
