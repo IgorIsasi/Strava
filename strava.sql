@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `Buelta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Buelta` (
-  `ID` int NOT NULL,
+  `ID` varchar(20) NOT NULL,
   `denbora` int DEFAULT NULL,
-  `IDEntrena` int DEFAULT NULL,
+  `IDEntrena` varchar(20) DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
   PRIMARY KEY (`ID`),
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `Ekipamendua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Ekipamendua` (
-  `ID` int NOT NULL,
+  `ID` varchar(20) NOT NULL,
   `marka` varchar(20) DEFAULT NULL,
   `modelo` varchar(20) DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
@@ -77,7 +77,7 @@ DROP TABLE IF EXISTS `Entrenamendua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Entrenamendua` (
-  `ID` int NOT NULL,
+  `ID` varchar(20) NOT NULL,
   `mota` varchar(20) DEFAULT NULL,
   `denbora` int DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
@@ -159,7 +159,7 @@ DROP TABLE IF EXISTS `Medizioak`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Medizioak` (
   `dataOrdua` datetime NOT NULL,
-  `IDBuelta` int DEFAULT NULL,
+  `IDBuelta` varchar(20) DEFAULT NULL,
   `pultsazioBzb` float DEFAULT NULL,
   `pultsazioMax` float DEFAULT NULL,
   `abiaduraBzb` float DEFAULT NULL,
@@ -187,15 +187,15 @@ DROP TABLE IF EXISTS `Segmentua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Segmentua` (
-  `ID` int NOT NULL,
+  `ID` varchar(20) NOT NULL,
   `denbora` int DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
   `hasieraData` varchar(20) DEFAULT NULL,
-  `IDEntrenamendua` int DEFAULT NULL,
+  `IDEntrenamendua` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `fk_IDEntrenamendua` (`IDEntrenamendua`),
-  CONSTRAINT `fk_IDEntrenamendua` FOREIGN KEY (`IDEntrenamendua`) REFERENCES `Entrenamendua` (`ID`)
+  KEY `IDEntrenamendua` (`IDEntrenamendua`),
+  CONSTRAINT `Segmentua_ibfk_1` FOREIGN KEY (`IDEntrenamendua`) REFERENCES `Entrenamendua` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -217,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-24 12:57:45
+-- Dump completed on 2021-11-29 12:48:52

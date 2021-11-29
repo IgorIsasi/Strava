@@ -2,6 +2,7 @@ from controllers.StravaAPI import stravaApiKud
 from controllers.DBKudeatzailea import DBKud
 import datetime
 import mysql.connector
+import datuakGorde
 
 
 def getAthlete():
@@ -124,7 +125,7 @@ def getActivitiesId(id):
 
 def main():
     if __name__ == '__main__':
-        #stravaApiKud.getAccessToTheAPI()
+        stravaApiKud.getAccessToTheAPI()
         #print(stravaApiKud.getAthlete())
         #em = stravaApiKud.getActivities({})
         #ac = stravaApiKud.getActivityId(em[0]["id"])
@@ -140,7 +141,14 @@ def main():
 
         kud = DBKud.DBKudeatzailea()
         kud.konektatu()
-        kud.tablak()
+        datuakGorde.getActivities(kud)
+        kud.datuakIkusi("Ekipamendua")
+        kud.datuakIkusi("Entrenamendua")
+        kud.datuakIkusi("Jarraitzaile")
+        kud.datuakIkusi("Komentario")
+        kud.datuakIkusi("Buelta")
+        kud.datuakIkusi("Medizioak")
+        kud.datuakIkusi("Segmentua")
         kud.deskonektatu()
 main()
 
