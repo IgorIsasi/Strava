@@ -19,10 +19,9 @@
 -- Table structure for table `Buelta`
 --
 
-DROP TABLE IF EXISTS `Buelta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Buelta` (
+CREATE TABLE IF NOT EXISTS `Buelta` (
   `ID` varchar(20) NOT NULL,
   `denbora` int DEFAULT NULL,
   `IDEntrena` varchar(20) DEFAULT NULL,
@@ -47,10 +46,9 @@ UNLOCK TABLES;
 -- Table structure for table `Ekipamendua`
 --
 
-DROP TABLE IF EXISTS `Ekipamendua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Ekipamendua` (
+CREATE TABLE IF NOT EXISTS `Ekipamendua` (
   `ID` varchar(20) NOT NULL,
   `marka` varchar(20) DEFAULT NULL,
   `modelo` varchar(20) DEFAULT NULL,
@@ -73,10 +71,9 @@ UNLOCK TABLES;
 -- Table structure for table `Entrenamendua`
 --
 
-DROP TABLE IF EXISTS `Entrenamendua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Entrenamendua` (
+CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `ID` varchar(20) NOT NULL,
   `mota` varchar(20) DEFAULT NULL,
   `denbora` int DEFAULT NULL,
@@ -103,10 +100,9 @@ UNLOCK TABLES;
 -- Table structure for table `Jarraitzaile`
 --
 
-DROP TABLE IF EXISTS `Jarraitzaile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Jarraitzaile` (
+CREATE TABLE IF NOT EXISTS `Jarraitzaile` (
   `izena` varchar(20) NOT NULL,
   `abizena` varchar(20) NOT NULL,
   PRIMARY KEY (`izena`,`abizena`)
@@ -126,10 +122,9 @@ UNLOCK TABLES;
 -- Table structure for table `Komentario`
 --
 
-DROP TABLE IF EXISTS `Komentario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Komentario` (
+CREATE TABLE IF NOT EXISTS `Komentario` (
   `komentarioIgorleIzena` varchar(20) DEFAULT NULL,
   `komentarioIgorleAbizena` varchar(20) DEFAULT NULL,
   `komentarioTestua` varchar(200) DEFAULT NULL,
@@ -154,10 +149,9 @@ UNLOCK TABLES;
 -- Table structure for table `Medizioak`
 --
 
-DROP TABLE IF EXISTS `Medizioak`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Medizioak` (
+CREATE TABLE IF NOT EXISTS`Medizioak` (
   `dataOrdua` datetime NOT NULL,
   `IDBuelta` varchar(20) DEFAULT NULL,
   `pultsazioBzb` float DEFAULT NULL,
@@ -183,10 +177,9 @@ UNLOCK TABLES;
 -- Table structure for table `Segmentua`
 --
 
-DROP TABLE IF EXISTS `Segmentua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Segmentua` (
+CREATE TABLE IF NOT EXISTS `Segmentua` (
   `ID` varchar(20) NOT NULL,
   `denbora` int DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
