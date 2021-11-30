@@ -86,8 +86,8 @@ class StravaAPIKud:
         return self.http.request('GET', self.host + "/athlete", None, goiburuak)
 
     @tojson    
-    def getActivities(self, parametroak,goiburuak={}):
-        return self.http.request('GET', self.host + "/athlete/activities/", parametroak, goiburuak)
+    def getActivities(self, goiburuak={}):
+        return self.http.request('GET', self.host + "/athlete/activities/", None, goiburuak)
          
 
 
@@ -117,7 +117,3 @@ class StravaAPIKud:
     def getCommentsByActivityId(self, id, goiburuak={}):
         dict = {}
         return self.http.request('GET', self.host + "/activities/" + str(id) + "/comments", dict, goiburuak)
-
-    
-
-    

@@ -28,19 +28,14 @@ CREATE TABLE IF NOT EXISTS `Buelta` (
   `izena` varchar(20) DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `IDEntrena` (`IDEntrena`),
+  /*KEY `IDEntrena` (`IDEntrena`),*/
   CONSTRAINT `Buelta_ibfk_1` FOREIGN KEY (`IDEntrena`) REFERENCES `Entrenamendua` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Buelta`
 --
-
-LOCK TABLES `Buelta` WRITE;
-/*!40000 ALTER TABLE `Buelta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Buelta` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Ekipamendua`
@@ -55,17 +50,12 @@ CREATE TABLE IF NOT EXISTS `Ekipamendua` (
   `izena` varchar(20) DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Ekipamendua`
 --
-
-LOCK TABLES `Ekipamendua` WRITE;
-/*!40000 ALTER TABLE `Ekipamendua` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Ekipamendua` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Entrenamendua`
@@ -84,18 +74,12 @@ CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `abiaduraBzb` float DEFAULT NULL,
   `abiaduraMax` float DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Entrenamendua`
 --
-
-LOCK TABLES `Entrenamendua` WRITE;
-/*!40000 ALTER TABLE `Entrenamendua` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Entrenamendua` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `Jarraitzaile`
 --
@@ -106,18 +90,12 @@ CREATE TABLE IF NOT EXISTS `Jarraitzaile` (
   `izena` varchar(20) NOT NULL,
   `abizena` varchar(20) NOT NULL,
   PRIMARY KEY (`izena`,`abizena`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Jarraitzaile`
 --
-
-LOCK TABLES `Jarraitzaile` WRITE;
-/*!40000 ALTER TABLE `Jarraitzaile` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Jarraitzaile` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `Komentario`
 --
@@ -131,20 +109,14 @@ CREATE TABLE IF NOT EXISTS `Komentario` (
   `komentarioId` int NOT NULL,
   `komentarioData` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`komentarioId`),
-  KEY `komentarioIgorleIzena` (`komentarioIgorleIzena`,`komentarioIgorleAbizena`),
+  /*KEY `komentarioIgorleIzena` (`komentarioIgorleIzena`,`komentarioIgorleAbizena`),*/
   CONSTRAINT `Komentario_ibfk_1` FOREIGN KEY (`komentarioIgorleIzena`, `komentarioIgorleAbizena`) REFERENCES `Jarraitzaile` (`izena`, `abizena`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Komentario`
 --
-
-LOCK TABLES `Komentario` WRITE;
-/*!40000 ALTER TABLE `Komentario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Komentario` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `Medizioak`
 --
@@ -159,20 +131,14 @@ CREATE TABLE IF NOT EXISTS`Medizioak` (
   `abiaduraBzb` float DEFAULT NULL,
   `abiaduraMax` float DEFAULT NULL,
   PRIMARY KEY (`dataOrdua`),
-  KEY `IDBuelta` (`IDBuelta`),
+  /*KEY `IDBuelta` (`IDBuelta`),*/
   CONSTRAINT `Medizioak_ibfk_1` FOREIGN KEY (`IDBuelta`) REFERENCES `Buelta` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Medizioak`
 --
-
-LOCK TABLES `Medizioak` WRITE;
-/*!40000 ALTER TABLE `Medizioak` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Medizioak` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `Segmentua`
 --
@@ -187,19 +153,14 @@ CREATE TABLE IF NOT EXISTS `Segmentua` (
   `hasieraData` varchar(20) DEFAULT NULL,
   `IDEntrenamendua` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `IDEntrenamendua` (`IDEntrenamendua`),
+  /*KEY `IDEntrenamendua` (`IDEntrenamendua`),*/
   CONSTRAINT `Segmentua_ibfk_1` FOREIGN KEY (`IDEntrenamendua`) REFERENCES `Entrenamendua` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Segmentua`
 --
-
-LOCK TABLES `Segmentua` WRITE;
-/*!40000 ALTER TABLE `Segmentua` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Segmentua` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
