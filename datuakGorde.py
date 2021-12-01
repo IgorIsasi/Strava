@@ -1,7 +1,6 @@
 from controllers.StravaAPI import stravaApiKud
 from controllers.DBKudeatzailea import DBKud
 import datetime
-import mysql.connector
 
 def getActivities(DBKud):    
         jarduerak=stravaApiKud.getActivities()
