@@ -5,6 +5,7 @@ from controllers.StravaAPI import stravaApiKud
 
 class DBKudeatzailea:
     def konektatu(self):
+        print("alo")
         #self.kon = mysql.connector.connect(host="localhost",user="strava",password="patata")
         #self.kur = self.kon.cursor()
         self.kon = sqlite3.connect("strava.db")
@@ -12,6 +13,7 @@ class DBKudeatzailea:
         with open('strava.sql') as db:
             dbString = db.read()
         self.kur.executescript(dbString)
+        
 
     def deskonektatu(self):
         self.kur.close()
@@ -35,6 +37,19 @@ class DBKudeatzailea:
         for x in self.kur:
             print(x)
 
+    def ekipamenduaKonprobatu(self,ID,marka,modelo,izena,distantzia):
+        self.kur.execute(f"SELECT ID,marka,modelo,izena,distantzia FROM Ekipamendua WHERE ID='{ID}' AND marka='{marka}' AND modelo='{modelo}' AND izena='{izena}' AND distantzia='{distantzia}'")
+        print(self.kur.description)
+        emaitza=len(self.kur.description)
+        if emaitza==0:
+            print("Datua ez zegoen beraz bidaliko dut")
+            self.ekipamenduaBidali(ID,marka,modelo,izena,distantzia)
+        else:
+            print("Datua bazegoen beraz ez dut bidaliko")
+            
+
+        
+
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
 
@@ -55,3 +70,5 @@ class DBKudeatzailea:
 
     def segmentuaBidali(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua):
         self.kur.execute(f"INSERT OR REPLACE INTO Segmentua(ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua) VALUES('{ID}', {denbora}, '{izena}', {distantzia}, '{hasieraData}', '{IDEntrenamendua}')")
+
+kudeatzaile=DBKudeatzailea()

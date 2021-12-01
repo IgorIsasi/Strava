@@ -30,9 +30,7 @@ def getActivitiesId(DBKud, id):
         modeloEk=ekipamendua['model_name']
         izenaEk=ekipamendua['nickname']
         distantziaEk=ekipamendua['converted_distance']
-
-        DBKud.ekipamenduaBidali(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
-
+        DBKud.ekipamenduaKonprobatu(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
 
 
     #ENTRENAMENDURAKO
