@@ -1,11 +1,11 @@
 from controllers.StravaAPI import stravaApiKud
-from controllers.DBKudeatzailea import DBKud
+from controllers.DBKudeatzailea.DBKud import kudeatzaile
 import datetime
 
-def getActivities(DBKud):    
+def getActivities():    
         jarduerak=stravaApiKud.getActivities()
         for jarduera in jarduerak:
-            getActivitiesId(DBKud, jarduera["id"])
+            getActivitiesId(jarduera["id"])
 
 
 def div():
@@ -14,9 +14,9 @@ def div():
     print("")
             
 
-def getActivitiesId(DBKud, id):
+def getActivitiesId(id):
     jardueraXehetasunekin=stravaApiKud.getActivityId(id)
-
+    
     kudos=stravaApiKud.getCommentsByActivityId(jardueraXehetasunekin["id"])
     heartrateDauka=jardueraXehetasunekin['has_heartrate']
     
@@ -29,7 +29,8 @@ def getActivitiesId(DBKud, id):
         modeloEk=ekipamendua['model_name']
         izenaEk=ekipamendua['nickname']
         distantziaEk=ekipamendua['converted_distance']
-        DBKud.ekipamenduaKonprobatu(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
+        kudeatzaile.ekipamenduaBidali(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
+        #kudeatzaile.ekipamenduaKonprobatu(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
 
 
     #ENTRENAMENDURAKO
@@ -43,7 +44,7 @@ def getActivitiesId(DBKud, id):
     abiaduraBzbEn=jardueraXehetasunekin['average_speed']
     abiaduraMaxEn=jardueraXehetasunekin['max_speed']
 
-    DBKud.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn)
+    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn)
     
 
     #KUDOS-ERAKO
@@ -52,14 +53,14 @@ def getActivitiesId(DBKud, id):
         izenaJarr=komentario["athlete"]["firstname"]
         abizenaJarr=komentario["athlete"]["lastname"]
 
-        DBKud.jarraitzaileaBidali(izenaJarr,abizenaJarr)
+        kudeatzaile.jarraitzaileaBidali(izenaJarr,abizenaJarr)
 
         #KOMENTARIOETARAKO
         idKom=komentario['id']
         testuaKom=komentario["text"]
         dataKom=komentario["created_at"]
 
-        DBKud.komentarioaBidali(izenaJarr,abizenaJarr,testuaKom,idKom,dataKom)
+        kudeatzaile.komentarioaBidali(izenaJarr,abizenaJarr,testuaKom,idKom,dataKom)
 
 
     #BUELTETARAKO  //TODO BERRIRO PLANTEATU
@@ -70,7 +71,7 @@ def getActivitiesId(DBKud, id):
         distantziaBu=buelta['distance']
         denboraBu=buelta['elapsed_time']
 
-        DBKud.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu)
+        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu)
 
         #MEDIZIOETARAKO
         dataOrduaMe=buelta['start_date_local']
@@ -83,7 +84,7 @@ def getActivitiesId(DBKud, id):
             pultsazioBzbMe=buelta['average_heartrate']
             pultsazioMaxMe=buelta['max_heartrate']
 
-        DBKud.medizioaBidali(dataOrduaMe,idBu,pultsazioBzbMe,pultsazioMaxMe,abiaduraBzbMe,abiaduraMaxMe)
+        kudeatzaile.medizioaBidali(dataOrduaMe,idBu,pultsazioBzbMe,pultsazioMaxMe,abiaduraBzbMe,abiaduraMaxMe)
 
     #SEGMENTUETARAKO
     segmentuak=jardueraXehetasunekin['segment_efforts']
@@ -94,4 +95,4 @@ def getActivitiesId(DBKud, id):
         hasieraDataSeg=segmentua['start_date_local']
         denboraSeg=segmentua['elapsed_time']
 
-        DBKud.segmentuaBidali(idSeg,denboraSeg,izenaSeg,distantziaSeg,hasieraDataSeg,idEn)
+        kudeatzaile.segmentuaBidali(idSeg,denboraSeg,izenaSeg,distantziaSeg,hasieraDataSeg,idEn)

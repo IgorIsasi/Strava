@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `mota` varchar(20) DEFAULT NULL,
   `denbora` int DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
-  `hasieraData` varchar(20) DEFAULT NULL,
+  `hasieraData` datetime DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
   `ikusgarritasuna` varchar(20) DEFAULT NULL,
   `abiaduraBzb` float DEFAULT NULL,
