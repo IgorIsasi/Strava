@@ -74,7 +74,7 @@ class DBKudeatzailea:
             print("Ekipamendua:")
             print(ek.ID,ek.marka,ek.modelo,ek.izena,ek.distantzia)    
 
-    def entrenamenduakIkusi(self):
+    def entrenamenduakIkusi(self, pa):
         self.kur.execute("SELECT * FROM Entrenamendua")
         entrenamenduak = []
         i = 0
@@ -155,27 +155,42 @@ class DBKudeatzailea:
             print(seg.ID,seg.denbora,seg.izena,seg.distantzia,seg.hasieraData,seg.IDEntrenamendua)
 
 
-    def entrenamenduaBilatu(self,noiztik,nora,mota):
+    def entrenamenduakBilatu(self, noiztik, nora, mota):
         entrenamenduak=[]
         if mota == "Guztiak":
             self.kur.execute(f"SELECT * FROM Entrenamendua WHERE hasieraData>{noiztik} AND hasieraData<{nora}")
+            i = 0
+            for atributuak in self.kur:
+                ID = atributuak[0]
+                mota = atributuak[1]
+                denbora = atributuak[2]
+                izena = atributuak[3]
+                hasieraData = atributuak[4]
+                distantzia = atributuak[5]
+                ikusgarritasuna = atributuak[6]
+                abiaduraBzb = atributuak[7]
+                abiaduraMax = atributuak[8]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
+                entrenamenduak.append(entr)
+                i=i+1
+                #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         else:
             self.kur.execute(f"SELECT * FROM Entrenamendua WHERE mota='{mota}' AND hasieraData>{noiztik} AND hasieraData<{nora}")
-        i = 0
-        for atributuak in self.kur:
-            ID = atributuak[0]
-            mota = atributuak[1]
-            denbora = atributuak[2]
-            izena = atributuak[3]
-            hasieraData = atributuak[4]
-            distantzia = atributuak[5]
-            ikusgarritasuna = atributuak[6]
-            abiaduraBzb = atributuak[7]
-            abiaduraMax = atributuak[8]
-            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
-            entrenamenduak.append(entr)
-            i=i+1
-            #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
+            i = 0
+            for atributuak in self.kur:
+                ID = atributuak[0]
+                mota = atributuak[1]
+                denbora = atributuak[2]
+                izena = atributuak[3]
+                hasieraData = atributuak[4]
+                distantzia = atributuak[5]
+                ikusgarritasuna = atributuak[6]
+                abiaduraBzb = atributuak[7]
+                abiaduraMax = atributuak[8]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
+                entrenamenduak.append(entr)
+                i=i+1
+                #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         return entrenamenduak
 
     def entrenamenduarenBueltakIkusi(self,IDEntrena):
