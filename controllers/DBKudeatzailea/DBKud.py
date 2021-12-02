@@ -46,8 +46,8 @@ class DBKudeatzailea:
 
     def ekipamenduaKonprobatu(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"SELECT ID,marka,modelo,izena,distantzia FROM Ekipamendua WHERE ID='{ID}' AND marka='{marka}' AND modelo='{modelo}' AND izena='{izena}' AND distantzia='{distantzia}'")
-        print(self.kur.description)
-        emaitza=len(self.kur.description)
+        emaitza=len(self.kur.fetchall())
+        print(emaitza)
         if emaitza==0:
             print("Datua ez zegoen beraz bidaliko dut")
             self.ekipamenduaBidali(ID,marka,modelo,izena,distantzia)
