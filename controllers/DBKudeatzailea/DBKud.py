@@ -18,14 +18,7 @@ class DBKudeatzailea:
     def kargatuDB(self):
         self.konektatu()
         stravaApiKud.getAccessToTheAPI()
-        datuakGorde.getActivities()
-        self.ekipamenduakIkusi()
-        self.entrenamenduakIkusi()
-        self.jarraitzaileakIkusi()
-        self.komentarioakIkusi()
-        self.bueltakIkusi()
-        self.medizioakIkusi()
-        self.segmentuakIkusi()
+        DatuakGorde.getActivities()
         self.deskonektatu
 
     def datuakIkusi(self, taula): #SELECT egitean objetua sortu eta ondoren bistaratu objetutik
@@ -35,13 +28,8 @@ class DBKudeatzailea:
 
     def ekipamenduaKonprobatu(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"SELECT ID,marka,modelo,izena,distantzia FROM Ekipamendua WHERE ID='{ID}' AND marka='{marka}' AND modelo='{modelo}' AND izena='{izena}' AND distantzia='{distantzia}'")
-<<<<<<< HEAD
-        emaitza=len(self.kur.fetchall())
-        print(emaitza)
-=======
         #print(self.kur.description)
         emaitza=len(self.kur.description)
->>>>>>> 5bc3c8038706e4f40795c14fc4dbcc4ec17de772
         if emaitza==0:
             #print("Datua ez zegoen beraz bidaliko dut")
             self.ekipamenduaBidali(ID,marka,modelo,izena,distantzia)
@@ -103,8 +91,8 @@ class DBKudeatzailea:
             entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
             entrenamenduak.append(entr)
             i=i+1
-            print("Entrenamendua:")
-            print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
+            #print("Entrenamendua:")
+            #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         return entrenamenduak
 
     def jarraitzaileakIkusi(self):
@@ -222,4 +210,4 @@ class DBKudeatzailea:
 
 
 kudeatzaile=DBKudeatzailea()
-import datuakGorde #behean circular import errorea ez agertzeko
+import DatuakGorde #behean circular import errorea ez agertzeko
