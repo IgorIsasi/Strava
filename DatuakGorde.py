@@ -37,7 +37,9 @@ def getActivitiesId(id):
     idEn=jardueraXehetasunekin['id']
     izenaEn=jardueraXehetasunekin['name']
     motaEn=jardueraXehetasunekin['type']
-    hasieraDataEn=jardueraXehetasunekin['start_date']
+    hasieraD=jardueraXehetasunekin['start_date']
+    hasieraDataEn=hasieraD.replace('T', ' ')
+    hasieraDataEn=hasieraDataEn.replace('Z', ' ')
     denboraEn=jardueraXehetasunekin['elapsed_time']
     distantziaEn=jardueraXehetasunekin['distance']
     ikusgarritasunaEn=jardueraXehetasunekin['visibility']
