@@ -158,7 +158,7 @@ class DBKudeatzailea:
     def entrenamenduakBilatu(self, noiztik, nora, mota):
         entrenamenduak=[]
         if mota == "Guztiak":
-            self.kur.execute(f"SELECT * FROM Entrenamendua WHERE hasieraData>{noiztik} AND hasieraData<{nora}")
+            self.kur.execute(f"SELECT * FROM Entrenamendua WHERE hasieraData>='{noiztik}' AND hasieraData<='{nora}'")
             i = 0
             for atributuak in self.kur:
                 ID = atributuak[0]
@@ -175,7 +175,7 @@ class DBKudeatzailea:
                 i=i+1
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         else:
-            self.kur.execute(f"SELECT * FROM Entrenamendua WHERE mota='{mota}' AND hasieraData>{noiztik} AND hasieraData<{nora}")
+            self.kur.execute(f"SELECT * FROM Entrenamendua WHERE mota='{mota}' AND hasieraData>='{noiztik}' AND hasieraData<='{nora}'")
             i = 0
             for atributuak in self.kur:
                 ID = atributuak[0]
