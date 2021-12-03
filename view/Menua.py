@@ -59,6 +59,8 @@ class Menua():
             self.frames[i].grid(row=i+3,column=1)
             #photo = tk.PhotoImage(file = f"{dirname}/irudiak/IMG_entrenamendua.png")
             #botoia=Button(frame, image = photo).pack()
+            self.frames.append(Frame(self.frameNagusia))
+            self.frames[i].pack()
             unekoEntrenamendua = entrenamenduak[i]
             izena = Button(self.frames[i],text=unekoEntrenamendua.izena,command=lambda : self.entrenamenduaBistaratu(unekoEntrenamendua))
             izena.pack()
