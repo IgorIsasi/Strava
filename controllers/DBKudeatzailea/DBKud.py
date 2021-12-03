@@ -193,7 +193,8 @@ class DBKudeatzailea:
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         return entrenamenduak
 
-    def entrenamenduarenBueltakIkusi(self,IDEntrena):
+    def entrenamenduarenBueltakIkusi(self,entrenamendua):
+        IDEntrena = entrenamendua.ID
         self.kur.execute(f"SELECT * FROM Buelta WHERE IDEntrena='{IDEntrena}'")
         bueltak = []
         i = 0

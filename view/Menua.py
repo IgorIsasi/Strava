@@ -14,30 +14,30 @@ dirname = os.path.dirname(__file__)
 class Menua():
     def __init__(self):
         self.window = tk.Tk()
-        self.window.geometry('500x700')
+        self.window.geometry('350x700')
         self.window.title("Menua")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
         self.frames=[]
         botoiakFrame = Frame(self.frameNagusia)
-        botoiakFrame.grid(row=0,column=1)
+        botoiakFrame.pack()
         eguneratu = Button(botoiakFrame,text="Datuak eguneratu",command=lambda : self.datuakEguneratu())
         eguneratu.pack()
-        ekipamendua = Button(botoiakFrame,text="Ekipamendua erakutsi",command=lambda : self.ekipamenduaErakutsi())
+        ekipamendua = Button(botoiakFrame,text="Ekipamenduak erakutsi",command=lambda : self.ekipamenduakErakutsi())
         ekipamendua.pack()
         bilaketaFrame = Frame(self.frameNagusia)
-        bilaketaFrame.grid(row=1,column=0)
+        bilaketaFrame.pack()
         aukerakMota=["Guztiak","Kayaking","Run","Ride","Rowing"]
         aldagaiaMota = StringVar(bilaketaFrame)
         aldagaiaMota.set(aukerakMota[0])
         motak = OptionMenu(bilaketaFrame, aldagaiaMota, aukerakMota[0], *aukerakMota)
-        motak.grid()
+        motak.pack()
         noiztik = tk.Entry(bilaketaFrame, textvariable=StringVar(value="Urtea-Hilabetea-Eguna"))
-        noiztik.grid()
+        noiztik.pack()
         nora = tk.Entry(bilaketaFrame, textvariable=StringVar(value="Urtea-Hilabetea-Eguna"))
-        nora.grid()
+        nora.pack()
         bilatu = Button(bilaketaFrame,text="Bilatu",command=lambda : self.entrenamenduakBilatu(noiztik.get(), nora.get(), aldagaiaMota.get()))
-        bilatu.grid()
+        bilatu.pack()
         self.window.mainloop()
 
 
@@ -45,7 +45,7 @@ class Menua():
         kudeatzaile.kargatuDB()
         tk.messagebox.showinfo(title="Datuak eguneratuta", message="Datuak ongi eguneratu dira!")
 
-    def ekipamenduaErakutsi(self):
+    def ekipamenduakErakutsi(self):
         EkipamenduLeihoa()
 
     def entrenamenduakBilatu(self,noiztik,nora,mota):
@@ -56,11 +56,11 @@ class Menua():
         entrenamenduak = kudeatzaile.entrenamenduakBilatu(noiztik,nora,mota)
         for i in range(0,len(entrenamenduak)):
             self.frames.append(tk.Frame(self.frameNagusia,relief=RAISED,bd=4))
-            self.frames[i].grid(row=i+3,column=1)
+            self.frames[i].pack()
             #photo = tk.PhotoImage(file = f"{dirname}/irudiak/IMG_entrenamendua.png")
             #botoia=Button(frame, image = photo).pack()
             unekoEntrenamendua = entrenamenduak[i]
-            izena = Button(self.frames[i],text=unekoEntrenamendua.izena,command=lambda : self.entrenamenduaBistaratu(unekoEntrenamendua))
+            izena = Button(self.frames[i],text=unekoEntrenamendua.izena,command=lambda i=i: self.entrenamenduaBistaratu(unekoEntrenamendua))
             izena.pack()
             data = Label(self.frames[i],text=unekoEntrenamendua.hasieraData)
             data.pack()
