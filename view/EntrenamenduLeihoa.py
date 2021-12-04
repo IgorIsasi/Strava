@@ -5,6 +5,11 @@ from tkinter.constants import RAISED
 from view import ScrollContainer
 from tkinter.ttk import *
 from controllers.DBKudeatzailea.DBKud import kudeatzaile
+import math
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
+NavigationToolbar2Tk)
 import os
 dirname = os.path.dirname(__file__)
 
@@ -12,13 +17,14 @@ dirname = os.path.dirname(__file__)
 class EntrenamenduLeihoa():
     def __init__(self,entrenamendua):
         self.window = tk.Toplevel()
-        self.window.geometry('660x500')
+        self.window.geometry('1000x500')
         self.window.title("Entrenamendua")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
         self.frameNagusia.grid_rowconfigure(1, weight=1)
         self.frameNagusia.grid_columnconfigure(1, weight=1)
         self.entrenamenduaErakutsi(entrenamendua)
+        self.grafikoaErakutsi(entrenamendua)
         self.bueltakErakutsi(entrenamendua)
 
         self.window.mainloop()
@@ -61,16 +67,35 @@ class EntrenamenduLeihoa():
         abiaduraBzb = Label(frameAbBzb,text=f"AbiaduraBzb: {entrenamendua.abiaduraBzb}m/s")
         abiaduraBzb.grid()
 
-
+    def grafikoaErakutsi(self,entrenamendua):
+        denborak = entrenamendua.streamDenborak.replace('[','')
+        denborak = denborak.replace(']','')
+        denborak = denborak.split(', ')
+        abiadurak = entrenamendua.streamAbiadurak.replace('[','')
+        abiadurak = abiadurak.replace(']','')
+        abiadurak = abiadurak.split(', ')
+        x = []
+        y = []
+        for denb in denborak:
+            x.append(int(denb))
+        for ab in abiadurak:
+            y.append(float(ab))
+        fig = Figure(figsize = (10,5),dpi=100)
+        g = fig.add_subplot(111)
+        g.plot(x,y)
+        canvas = FigureCanvasTkAgg(fig,master = self.frameNagusia)  
+        canvas.draw()
+        # placing the canvas on the Tkinter window
+        canvas.get_tk_widget().grid()
 
     def bueltakErakutsi(self,entrenamendua):
         bueltak = kudeatzaile.entrenamenduarenBueltakIkusi(entrenamendua)
         datuak = []
         for buelta in bueltak:
-            datuak.append((buelta.izena, buelta.distantzia, buelta.denbora))
+            datuak.append((buelta.izena, buelta.distantzia, buelta.denbora, buelta.abiaduraBzb, buelta.pultsazioBzb))
 
-        goiburuak = ["Izena", "Distantzia", "Denbora"]
-        taula = ttk.Treeview(self.frameNagusia, columns=(0,1,2), show='headings')
+        goiburuak = ["Izena", "Distantzia(m)", "Denbora(s)", "AbiaduraBzb(m/s)", "PultsazioaBzb"]
+        taula = ttk.Treeview(self.frameNagusia, columns=(0,1,2,3,4), show='headings')
 
         for i,g in enumerate(goiburuak):
             taula.column(f"#{i}", minwidth=0, width=200)

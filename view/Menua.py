@@ -40,7 +40,7 @@ class Menua():
         nora.grid()
         bilatu = Button(bilaketaFrame,text="Bilatu",command=lambda : self.entrenamenduakBilatu(noiztik.get(), nora.get(), aldagaiaMota.get()))
         bilatu.grid()
-        self.entrenamenduakBilatu("1000-01-01","3000-01-01","Guztiak") #Defektuz entrenamendu guztiak agertzeko
+        self.entrenamenduakIkusi() #Defektuz entrenamendu guztiak agertzeko
         self.window.mainloop()
 
 
@@ -50,6 +50,35 @@ class Menua():
 
     def ekipamenduakErakutsi(self):
         EkipamenduLeihoa()
+
+    def entrenamenduakIkusi(self):
+        for frame in self.frames:
+            frame.grid_forget()
+            frame.destroy()
+        self.frames.clear()
+        entrenamenduak = kudeatzaile.entrenamenduakIkusi()
+        col = 0
+        r = 2
+        for i in range(0,len(entrenamenduak)):
+            if(col > 2):
+                col = 0
+                r = r + 1
+            self.frames.append(tk.Frame(self.frameNagusia,relief=RAISED,bd=4))
+            self.frames[i].grid(row=r,column=col,pady=20)
+            #photo = tk.PhotoImage(file = f"{dirname}/irudiak/IMG_entrenamendua.png")
+            #botoia=Button(frame, image = photo).pack()
+            unekoEntrenamendua = entrenamenduak[i]
+            izena = Button(self.frames[i],text=unekoEntrenamendua.izena,command=lambda i=i: self.entrenamenduaBistaratu(entrenamenduak[i]))
+            izena.grid()
+            data = Label(self.frames[i],text=f"Data: {unekoEntrenamendua.hasieraData}")
+            data.grid()
+            mota = Label(self.frames[i],text=f"Mota: {unekoEntrenamendua.mota}")
+            mota.grid()
+            distantzia = Label(self.frames[i],text=f"Distantzia: {unekoEntrenamendua.distantzia}m")
+            distantzia.grid()
+            denbora = Label(self.frames[i],text=f" Denbora: {unekoEntrenamendua.denbora} segundu")
+            denbora.grid()
+            col = col + 1
 
     def entrenamenduakBilatu(self,noiztik,nora,mota):
         for frame in self.frames:

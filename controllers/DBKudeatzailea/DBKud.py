@@ -1,6 +1,6 @@
 import sqlite3
 from controllers.StravaAPI import stravaApiKud
-from model import Ekipamendua,Jarraitzaile,Komentario,Buelta,Entrenamendua,Medizioa,Segmentua
+from model import Ekipamendua,Jarraitzaile,Komentario,Buelta,Entrenamendua,Segmentua
 
 class DBKudeatzailea:
     def konektatu(self):
@@ -41,8 +41,8 @@ class DBKudeatzailea:
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
 
-    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax):
-        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax})")
+    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak):
+        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamAbiadurak) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamAbiadurak}')")
 
     def jarraitzaileaBidali(self,izena,abizena):
         self.kur.execute(f"INSERT OR REPLACE INTO Jarraitzaile(izena, abizena) VALUES('{izena}', '{abizena}')")
@@ -50,8 +50,8 @@ class DBKudeatzailea:
     def komentarioaBidali(self,izena,abizena,testua,ID,data):
         self.kur.execute(f"INSERT OR REPLACE INTO Komentario(komentarioIgorleIzena, komentarioIgorleAbizena, komentarioTestua, komentarioId, komentarioData) VALUES('{izena}', '{abizena}', '{testua}', '{ID}', '{data}')")
 
-    def bueltaBidali(self,ID,denbora,IDEntrena,izena,distantzia):
-        self.kur.execute(f"INSERT OR REPLACE INTO Buelta(ID, denbora, IDEntrena, izena, distantzia) VALUES('{ID}', {denbora}, '{IDEntrena}', '{izena}', {distantzia})")
+    def bueltaBidali(self,ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax):
+        self.kur.execute(f"INSERT OR REPLACE INTO Buelta(ID, denbora, IDEntrena, izena, distantzia, dataOrdua, abiaduraBzb, abiaduraMax, pultsazioBzb, pultsazioMax) VALUES('{ID}', {denbora}, '{IDEntrena}', '{izena}', {distantzia}, '{dataOrdua}', {abiaduraBzb}, {abiaduraMax}, {pultsazioBzb}, {pultsazioMax})")
 
     def medizioaBidali(self,dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax):
         self.kur.execute(f"INSERT OR REPLACE INTO Medizioak(dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax) VALUES('{dataOrdua}', '{IDBuelta}', {pultsazioBzb}, {pultsazioMax}, {abiaduraBzb}, {abiaduraMax})")
@@ -74,7 +74,7 @@ class DBKudeatzailea:
             print("Ekipamendua:")
             print(ek.ID,ek.marka,ek.modelo,ek.izena,ek.distantzia)    
 
-    def entrenamenduakIkusi(self, pa):
+    def entrenamenduakIkusi(self):
         self.kur.execute("SELECT * FROM Entrenamendua")
         entrenamenduak = []
         i = 0
@@ -88,72 +88,12 @@ class DBKudeatzailea:
             ikusgarritasuna = atributuak[6]
             abiaduraBzb = atributuak[7]
             abiaduraMax = atributuak[8]
-            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
+            streamDenborak = atributuak[9]
+            streamAbiadurak = atributuak[10]
+            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
             entrenamenduak.append(entr)
             i=i+1
-            #print("Entrenamendua:")
-            #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         return entrenamenduak
-
-    def jarraitzaileakIkusi(self):
-        self.kur.execute("SELECT * FROM Jarraitzaile")
-        for atributuak in self.kur:
-            izena = atributuak[0]
-            abizena = atributuak[1]
-            jarr = Jarraitzaile.Jarraitzaile(izena,abizena)
-            print("Jarraitzailea:")
-            print(jarr.izena,jarr.abizena)
-
-    def komentarioakIkusi(self):
-        self.kur.execute("SELECT * FROM Komentario")
-        for atributuak in self.kur:
-            izena = atributuak[0]
-            abizena = atributuak[1]
-            testua = atributuak[2]
-            ID = atributuak[3]
-            data = atributuak[4]
-            kom = Komentario.Komentario(izena,abizena,testua,ID,data)
-            print("Komentarioa:")
-            print(kom.komentarioIgorleIzena,kom.komentarioIgorleAbizena,kom.komentarioTestua,kom.komentarioId,kom.komentarioData)
-
-    def bueltakIkusi(self):
-        self.kur.execute("SELECT * FROM Buelta")
-        for atributuak in self.kur:
-            ID = atributuak[0]
-            denbora = atributuak[1]
-            IDEntrena = atributuak[2]
-            izena = atributuak[3]
-            distantzia = atributuak[4]
-            buel = Buelta.Buelta(ID,denbora,IDEntrena,izena,distantzia)
-            print("Buelta:")
-            print(buel.ID,buel.denbora,buel.IDEntrena,buel.izena,buel.distantzia)
-
-    def medizioakIkusi(self):
-        self.kur.execute("SELECT * FROM Medizioak")
-        for atributuak in self.kur:
-            dataOrdua = atributuak[0]
-            IDBuelta = atributuak[1]
-            pultsazioBzb = atributuak[2]
-            pultsazioMax = atributuak[3]
-            abiaduraBzb = atributuak[4]
-            abiaduraMax = atributuak[5]
-            med = Medizioa.Medizioa(dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax)
-            print("Medizioa:")
-            print(med.dataOrdua,med.IDBuelta,med.pultsazioBzb,med.pultsazioMax,med.abiaduraBzb,med.abiaduraMax)
-
-    def segmentuakIkusi(self):
-        self.kur.execute("SELECT * FROM Segmentua")
-        for atributuak in self.kur:
-            ID = atributuak[0]
-            denbora = atributuak[1]
-            izena = atributuak[2]
-            distantzia = atributuak[3]
-            hasieraData = atributuak[4]
-            IDEntrenamendua = atributuak[5]
-            seg = Segmentua.Segmentua(ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua)
-            print("Segmentua:")
-            print(seg.ID,seg.denbora,seg.izena,seg.distantzia,seg.hasieraData,seg.IDEntrenamendua)
-
 
     def entrenamenduakBilatu(self, noiztik, nora, mota):
         entrenamenduak=[]
@@ -170,7 +110,9 @@ class DBKudeatzailea:
                 ikusgarritasuna = atributuak[6]
                 abiaduraBzb = atributuak[7]
                 abiaduraMax = atributuak[8]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
+                streamDenborak = atributuak[9]
+                streamAbiadurak = atributuak[10]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
                 entrenamenduak.append(entr)
                 i=i+1
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
@@ -187,7 +129,9 @@ class DBKudeatzailea:
                 ikusgarritasuna = atributuak[6]
                 abiaduraBzb = atributuak[7]
                 abiaduraMax = atributuak[8]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax)
+                streamDenborak = atributuak[9]
+                streamAbiadurak = atributuak[10]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
                 entrenamenduak.append(entr)
                 i=i+1
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
@@ -204,9 +148,13 @@ class DBKudeatzailea:
             IDEntrena = atributuak[2]
             izena = atributuak[3]
             distantzia = atributuak[4]
-            buel = Buelta.Buelta(ID,denbora,IDEntrena,izena,distantzia)
+            dataOrdua = atributuak[5]
+            abiaduraBzb = atributuak[6]
+            abiaduraMax = atributuak[7]
+            pultsazioBzb= atributuak[8]
+            pultsazioMax = atributuak[9]
+            buel = Buelta.Buelta(ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax)
             bueltak.append(buel)
-            #print(buel.ID,buel.denbora,buel.IDEntrena,buel.izena,buel.distantzia)
         return bueltak
 
     def ekipamenduenDistantziaIkusi(self):

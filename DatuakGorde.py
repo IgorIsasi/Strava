@@ -16,6 +16,8 @@ def div():
 
 def getActivitiesId(id):
     jardueraXehetasunekin=stravaApiKud.getActivityId(id)
+    stream=stravaApiKud.getActivityStreams(id)
+    #print(stream["time"],stream["velocity_smooth"],len(stream["time"]),len(stream["velocity_smooth"]))
     
     kudos=stravaApiKud.getCommentsByActivityId(jardueraXehetasunekin["id"])
     heartrateDauka=jardueraXehetasunekin['has_heartrate']
@@ -45,8 +47,10 @@ def getActivitiesId(id):
     ikusgarritasunaEn=jardueraXehetasunekin['visibility']
     abiaduraBzbEn=jardueraXehetasunekin['average_speed']
     abiaduraMaxEn=jardueraXehetasunekin['max_speed']
+    streamDenborakEn=stream["time"]["data"]
+    streamAbiadurakEn=stream["velocity_smooth"]["data"]
 
-    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn)
+    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamAbiadurakEn)
     
 
     #KUDOS-ERAKO
@@ -72,21 +76,17 @@ def getActivitiesId(id):
         izenaBu=buelta['name']
         distantziaBu=buelta['distance']
         denboraBu=buelta['elapsed_time']
-
-        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu)
-
-        #MEDIZIOETARAKO
-        dataOrduaMe=buelta['start_date_local']
-        abiaduraBzbMe=buelta['average_speed']
-        abiaduraMaxMe=buelta['max_speed']
-        pultsazioBzbMe='NULL'
-        pultsazioMaxMe='NULL'
+        dataOrduaBu=buelta['start_date_local']
+        abiaduraBzbBu=buelta['average_speed']
+        abiaduraMaxBu=buelta['max_speed']
+        pultsazioBzbBu='NULL'
+        pultsazioMaxBu='NULL'
 
         if(heartrateDauka):
-            pultsazioBzbMe=buelta['average_heartrate']
-            pultsazioMaxMe=buelta['max_heartrate']
+            pultsazioBzbBu=buelta['average_heartrate']
+            pultsazioMaxBu=buelta['max_heartrate']
 
-        kudeatzaile.medizioaBidali(dataOrduaMe,idBu,pultsazioBzbMe,pultsazioMaxMe,abiaduraBzbMe,abiaduraMaxMe)
+        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu)
 
     #SEGMENTUETARAKO
     segmentuak=jardueraXehetasunekin['segment_efforts']

@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS `Buelta` (
   `IDEntrena` varchar(20) DEFAULT NULL,
   `izena` varchar(20) DEFAULT NULL,
   `distantzia` float DEFAULT NULL,
+  `dataOrdua` datetime DEFAULT NULL,
+  `abiaduraBzb` float DEFAULT NULL,
+  `abiaduraMax` float DEFAULT NULL,
+  `pultsazioBzb` float DEFAULT NULL,
+  `pultsazioMax` float DEFAULT NULL,
   PRIMARY KEY (`ID`),
   /*KEY `IDEntrena` (`IDEntrena`),*/
   CONSTRAINT `Buelta_ibfk_1` FOREIGN KEY (`IDEntrena`) REFERENCES `Entrenamendua` (`ID`)
@@ -73,6 +78,8 @@ CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `ikusgarritasuna` varchar(20) DEFAULT NULL,
   `abiaduraBzb` float DEFAULT NULL,
   `abiaduraMax` float DEFAULT NULL,
+  `streamDenborak` JSON DEFAULT NULL,
+  `streamAbiadurak` JSON DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) 
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -116,28 +123,6 @@ CREATE TABLE IF NOT EXISTS `Komentario` (
 
 --
 -- Dumping data for table `Komentario`
---
---
--- Table structure for table `Medizioak`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE IF NOT EXISTS`Medizioak` (
-  `dataOrdua` datetime NOT NULL,
-  `IDBuelta` varchar(20) DEFAULT NULL,
-  `pultsazioBzb` float DEFAULT NULL,
-  `pultsazioMax` float DEFAULT NULL,
-  `abiaduraBzb` float DEFAULT NULL,
-  `abiaduraMax` float DEFAULT NULL,
-  PRIMARY KEY (`dataOrdua`),
-  /*KEY `IDBuelta` (`IDBuelta`),*/
-  CONSTRAINT `Medizioak_ibfk_1` FOREIGN KEY (`IDBuelta`) REFERENCES `Buelta` (`ID`)
-)
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Medizioak`
 --
 --
 -- Table structure for table `Segmentua`
