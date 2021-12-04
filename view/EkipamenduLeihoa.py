@@ -15,14 +15,10 @@ class EkipamenduLeihoa:
         self.window.title("Ekipamenduak")
         #self.frameNagusia = Frame(self.window)
         datuak = []
-        ekDatuak = []
         ekipamenduak = kudeatzaile.ekipamenduenDistantziaIkusi()
         for ekipamendu in ekipamenduak:
-            ekDatuak.append(ekipamendu.izena)
-            ekDatuak.append(ekipamendu.marka)
-            ekDatuak.append(ekipamendu.modelo)
-            ekDatuak.append(ekipamendu.distantzia)
-            datuak.append(ekDatuak)
+            datuak.append((ekipamendu.izena,ekipamendu.marka,ekipamendu.modelo,ekipamendu.distantzia))
+
         goiburuak = ["Izena", "Marka", "Modeloa", "Distantzia"]
         taula = ttk.Treeview(self.window, columns=(0,1,2,3), show='headings')
 
