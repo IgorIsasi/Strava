@@ -76,17 +76,29 @@ class EntrenamenduLeihoa():
         abiadurak = abiadurak.split(', ')
         x = []
         y = []
+        sartu = True #Puntu gehiegi ez egoteko grafikoan (ez da ondo ikusten grafikoa puntu askorekin)
         for denb in denborak:
-            x.append(int(denb))
+            if(sartu):
+                x.append(int(denb))
+                sartu = False
+            else:
+                sartu = True
+        sartu = True
         for ab in abiadurak:
-            y.append(float(ab))
+            if(sartu):
+                y.append(float(ab))
+                sartu = False
+            else:
+                sartu = True
         fig = Figure(figsize = (10,5),dpi=100)
         g = fig.add_subplot(111)
         g.plot(x,y)
+        g.set_ylabel("Abiadura(m/s)", fontsize=14)
+        g.set_xlabel("Denbora(s)", fontsize=14)
         canvas = FigureCanvasTkAgg(fig,master = self.frameNagusia)  
         canvas.draw()
         # placing the canvas on the Tkinter window
-        canvas.get_tk_widget().grid()
+        canvas.get_tk_widget().grid(pady=5)
 
     def bueltakErakutsi(self,entrenamendua):
         bueltak = kudeatzaile.entrenamenduarenBueltakIkusi(entrenamendua)
