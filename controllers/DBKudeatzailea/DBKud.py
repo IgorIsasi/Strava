@@ -41,8 +41,8 @@ class DBKudeatzailea:
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
 
-    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak):
-        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}')")
+    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa):
+        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak, mapa) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}', '{mapa}')")
 
     def jarraitzaileaBidali(self,izena,abizena):
         self.kur.execute(f"INSERT OR REPLACE INTO Jarraitzaile(izena, abizena) VALUES('{izena}', '{abizena}')")
@@ -62,18 +62,6 @@ class DBKudeatzailea:
 
 
     #DATUAK IKUSI (KLASEAK SORTUZ)
-    def ekipamenduakIkusi(self):
-        self.kur.execute("SELECT * FROM Ekipamendua")
-        for atributuak in self.kur:
-            ID = atributuak[0]
-            marka = atributuak[1]
-            modelo = atributuak[2]
-            izena = atributuak[3]
-            distantzia = atributuak[4]
-            ek = Ekipamendua.Ekipamendua(ID,marka,modelo,izena,distantzia)
-            print("Ekipamendua:")
-            print(ek.ID,ek.marka,ek.modelo,ek.izena,ek.distantzia)    
-
     def entrenamenduakIkusi(self):
         self.kur.execute("SELECT * FROM Entrenamendua")
         entrenamenduak = []
@@ -93,7 +81,8 @@ class DBKudeatzailea:
             streamAbiadurak = atributuak[11]
             streamPultsazioak = atributuak[12]
             streamAltitudeak = atributuak[13]
-            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
+            mapa = atributuak[14]
+            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
             entrenamenduak.append(entr)
             i=i+1
         return entrenamenduak
@@ -118,10 +107,10 @@ class DBKudeatzailea:
                 streamAbiadurak = atributuak[11]
                 streamPultsazioak = atributuak[12]
                 streamAltitudeak = atributuak[13]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
+                mapa = atributuak[14]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
                 entrenamenduak.append(entr)
                 i=i+1
-                #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         else:
             self.kur.execute(f"SELECT * FROM Entrenamendua WHERE mota='{mota}' AND hasieraData>='{noiztik}' AND hasieraData<='{nora}'")
             i = 0
@@ -140,10 +129,10 @@ class DBKudeatzailea:
                 streamAbiadurak = atributuak[11]
                 streamPultsazioak = atributuak[12]
                 streamAltitudeak = atributuak[13]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
+                mapa = atributuak[14]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
                 entrenamenduak.append(entr)
                 i=i+1
-                #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
         return entrenamenduak
 
     def entrenamenduarenBueltakIkusi(self,entrenamendua):
@@ -178,7 +167,6 @@ class DBKudeatzailea:
             distantzia = atributuak[4]
             ek = Ekipamendua.Ekipamendua(ID,marka,modelo,izena,distantzia)
             ekipamenduak.append(ek)
-            #print(ek.ID,ek.marka,ek.modelo,ek.izena,ek.distantzia)    
         return ekipamenduak
 
 

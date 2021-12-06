@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import messagebox
 from tkinter import ttk
 from tkinter.constants import RAISED
 from view import ScrollContainer
@@ -12,6 +11,10 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
 NavigationToolbar2Tk)
 import os
+import urllib.parse
+import urllib3
+from PIL import Image, ImageTk
+import io
 dirname = os.path.dirname(__file__)
 
 
@@ -27,9 +30,9 @@ class EntrenamenduLeihoa():
         self.canvas = None
         self.entrenamenduaErakutsi(entrenamendua)
         self.bueltakErakutsi(entrenamendua)
-
+        self.mapaErakutsi(entrenamendua)
         bilaketaFrame = Frame(self.frameNagusia, width=500, height=150)
-        bilaketaFrame.grid(pady=20)
+        bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
         aldagaiaX = StringVar(bilaketaFrame)
         aldagaiaX.set(aukerakX[0])
@@ -42,9 +45,7 @@ class EntrenamenduLeihoa():
         motakY.grid()
         erakutsi = Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, aldagaiaX.get(), aldagaiaY.get()))
         erakutsi.grid()
-  
         self.grafikoaErakutsi(entrenamendua, "Denbora", "Abiadura")
-
         self.window.mainloop()
 
     def entrenamenduaErakutsi(self,entrenamendua):
@@ -53,55 +54,55 @@ class EntrenamenduLeihoa():
         frameEntr.grid_columnconfigure(1, weight=1)
         frameEntr.grid(pady=25)
         frameID = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameID.grid(row=0,column=0,sticky="ew")
+        frameID.grid(row=1,column=0,sticky="ew")
         t1 = tk.Label(frameID,text="___________ID___________",bg="gray")
         id = tk.Label(frameID,text=entrenamendua.ID)
         t1.grid()
         id.grid()
         frameIkus = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameIkus.grid(row=0,column=1,sticky="ew")
+        frameIkus.grid(row=1,column=1,sticky="ew")
         t2 = tk.Label(frameIkus,text="______Ikusgarritasuna______",bg="gray")
         ikusgarritasuna = tk.Label(frameIkus,text=entrenamendua.ikusgarritasuna)
         t2.grid()
         ikusgarritasuna.grid()
         frameIzena = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameIzena.grid(row=0,column=2,sticky="ew")
+        frameIzena.grid(row=1,column=2,sticky="ew")
         t3 = tk.Label(frameIzena,text="_________Izena_________",bg="gray")
         izena = tk.Label(frameIzena,text=entrenamendua.izena)
         t3.grid()
         izena.grid()
         frameData = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameData.grid(row=0,column=3,sticky="ew")
+        frameData.grid(row=1,column=3,sticky="ew")
         t4 = tk.Label(frameData,text="__________Data__________",bg="gray")
         data = tk.Label(frameData,text=entrenamendua.hasieraData)
         t4.grid()
         data.grid()
         frameMota = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameMota.grid(row=1,column=0,sticky="ew")
+        frameMota.grid(row=2,column=0,sticky="ew")
         t5 = tk.Label(frameMota,text="_________Mota__________",bg="gray")
         mota = tk.Label(frameMota,text=entrenamendua.mota)
         t5.grid()
         mota.grid()
         frameDis = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameDis.grid(row=1,column=1,sticky="ew")
+        frameDis.grid(row=2,column=1,sticky="ew")
         t6 = tk.Label(frameDis,text="________Distantzia_________",bg="gray")
         distantzia = tk.Label(frameDis,text=entrenamendua.distantzia)
         t6.grid()
         distantzia.grid()
         frameDenb = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameDenb.grid(row=1,column=2,sticky="ew")
+        frameDenb.grid(row=2,column=2,sticky="ew")
         t7 = tk.Label(frameDenb,text="_______Denbora________",bg="gray")
         denbora = tk.Label(frameDenb,text=entrenamendua.denbora)
         t7.grid()
         denbora.grid()
         frameAbMax = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameAbMax.grid(row=1,column=3,sticky="ew")
+        frameAbMax.grid(row=2,column=3,sticky="ew")
         t8 = tk.Label(frameAbMax,text="______AbiaduraMax______",bg="gray")
         abiaduraMax = tk.Label(frameAbMax,text=entrenamendua.abiaduraMax)
         t8.grid()
         abiaduraMax.grid()
         frameAbBzb = tk.Frame(frameEntr,relief=RAISED,bd=3)
-        frameAbBzb.grid(row=2,column=0,sticky="ew")
+        frameAbBzb.grid(row=3,column=0,sticky="ew")
         t9 = tk.Label(frameAbBzb,text="______AbiaduraBzb______",bg="gray")
         abiaduraBzb = tk.Label(frameAbBzb,text=entrenamendua.abiaduraBzb)
         t9.grid()
@@ -174,3 +175,24 @@ class EntrenamenduLeihoa():
             taula.insert(parent='', index=i, iid=i, values=d)
             
         taula.grid(pady=15)
+
+    def mapaErakutsi(self,entrenamendua):
+        token = "pk.eyJ1IjoiaWdvcmlzYXNpIiwiYSI6ImNrd3V4dGRncjFkaXIyb2xzODFjcWN1OGcifQ.izWu_zUPNQQw8eeqgCuKfg"
+        strokeWidth = 1
+        strokeColor = "f44"
+        http = urllib3.PoolManager()
+        polyline_ = urllib.parse.quote_plus(entrenamendua.mapa)
+        path = f"path-{strokeWidth}+{strokeColor}({polyline_})"
+        host = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
+        tamaina = "/auto/1000x550"
+        url = f"{host}{path}{tamaina}?access_token={token}"
+        em = http.request('GET', url)
+        # Irudiaren data irakurri eta argazkia sortu
+        img = Image.open(io.BytesIO(em.data))
+        # Tkinter en argazkia sortu
+        # oso importantea self ekin gordetzea, bestela argazkia ezabatu egingo da.
+        self.img2 = ImageTk.PhotoImage(img)
+        # Label batean sartu
+        panel = tk.Label(self.frameNagusia, image=self.img2)
+        # bistaratu
+        panel.grid(pady=25)

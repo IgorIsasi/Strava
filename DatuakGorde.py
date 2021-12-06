@@ -17,7 +17,6 @@ def div():
 def getActivitiesId(id):
     jardueraXehetasunekin=stravaApiKud.getActivityId(id)
     stream=stravaApiKud.getActivityStreams(id)
-    #print(stream["time"],stream["velocity_smooth"],len(stream["time"]),len(stream["velocity_smooth"]))
     
     kudos=stravaApiKud.getCommentsByActivityId(jardueraXehetasunekin["id"])
     heartrateDauka=jardueraXehetasunekin['has_heartrate']
@@ -52,8 +51,9 @@ def getActivitiesId(id):
     streamAbiadurakEn=stream["velocity_smooth"]["data"]
     streamPultsazioakEn=stream["heartrate"]["data"]
     streamAltitudeakEn=stream["altitude"]["data"]
+    mapaEn = jardueraXehetasunekin['map']['polyline']
 
-    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn)
+    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn)
     
 
     #KUDOS-ERAKO
