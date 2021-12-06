@@ -48,9 +48,12 @@ def getActivitiesId(id):
     abiaduraBzbEn=jardueraXehetasunekin['average_speed']
     abiaduraMaxEn=jardueraXehetasunekin['max_speed']
     streamDenborakEn=stream["time"]["data"]
+    streamDistantziakEn=stream["distance"]["data"]
     streamAbiadurakEn=stream["velocity_smooth"]["data"]
+    streamPultsazioakEn=stream["heartrate"]["data"]
+    streamAltitudeakEn=stream["altitude"]["data"]
 
-    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamAbiadurakEn)
+    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn)
     
 
     #KUDOS-ERAKO

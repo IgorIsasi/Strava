@@ -79,7 +79,10 @@ CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `abiaduraBzb` float DEFAULT NULL,
   `abiaduraMax` float DEFAULT NULL,
   `streamDenborak` JSON DEFAULT NULL,
+  `streamDistantziak` JSON DEFAULT NULL,
   `streamAbiadurak` JSON DEFAULT NULL,
+  `streamPultsazioak` JSON DEFAULT NULL,
+  `streamAltitudeak` JSON DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) 
 /*!40101 SET character_set_client = @saved_cs_client */;

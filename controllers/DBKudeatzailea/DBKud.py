@@ -41,8 +41,8 @@ class DBKudeatzailea:
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
 
-    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak):
-        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamAbiadurak) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamAbiadurak}')")
+    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak):
+        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}')")
 
     def jarraitzaileaBidali(self,izena,abizena):
         self.kur.execute(f"INSERT OR REPLACE INTO Jarraitzaile(izena, abizena) VALUES('{izena}', '{abizena}')")
@@ -89,8 +89,11 @@ class DBKudeatzailea:
             abiaduraBzb = atributuak[7]
             abiaduraMax = atributuak[8]
             streamDenborak = atributuak[9]
-            streamAbiadurak = atributuak[10]
-            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
+            streamDistantziak = atributuak[10]
+            streamAbiadurak = atributuak[11]
+            streamPultsazioak = atributuak[12]
+            streamAltitudeak = atributuak[13]
+            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
             entrenamenduak.append(entr)
             i=i+1
         return entrenamenduak
@@ -111,8 +114,11 @@ class DBKudeatzailea:
                 abiaduraBzb = atributuak[7]
                 abiaduraMax = atributuak[8]
                 streamDenborak = atributuak[9]
-                streamAbiadurak = atributuak[10]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
+                streamDistantziak = atributuak[10]
+                streamAbiadurak = atributuak[11]
+                streamPultsazioak = atributuak[12]
+                streamAltitudeak = atributuak[13]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
                 entrenamenduak.append(entr)
                 i=i+1
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)
@@ -130,8 +136,11 @@ class DBKudeatzailea:
                 abiaduraBzb = atributuak[7]
                 abiaduraMax = atributuak[8]
                 streamDenborak = atributuak[9]
-                streamAbiadurak = atributuak[10]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamAbiadurak)
+                streamDistantziak = atributuak[10]
+                streamAbiadurak = atributuak[11]
+                streamPultsazioak = atributuak[12]
+                streamAltitudeak = atributuak[13]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak)
                 entrenamenduak.append(entr)
                 i=i+1
                 #print(entr.ID,entr.mota,entr.denbora,entr.izena,entr.hasieraData,entr.distantzia,entr.ikusgarritasuna,entr.abiaduraBzb,entr.abiaduraMax)

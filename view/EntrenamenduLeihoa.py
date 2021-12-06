@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from tkinter.constants import RAISED
@@ -17,88 +18,144 @@ dirname = os.path.dirname(__file__)
 class EntrenamenduLeihoa():
     def __init__(self,entrenamendua):
         self.window = tk.Toplevel()
-        self.window.geometry('1000x500')
+        self.window.geometry('1500x800')
         self.window.title("Entrenamendua")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
         self.frameNagusia.grid_rowconfigure(1, weight=1)
         self.frameNagusia.grid_columnconfigure(1, weight=1)
+        self.canvas = None
         self.entrenamenduaErakutsi(entrenamendua)
-        self.grafikoaErakutsi(entrenamendua)
         self.bueltakErakutsi(entrenamendua)
+
+        bilaketaFrame = Frame(self.frameNagusia, width=500, height=150)
+        bilaketaFrame.grid(pady=20)
+        aukerakX=["Denbora","Distantzia"]
+        aldagaiaX = StringVar(bilaketaFrame)
+        aldagaiaX.set(aukerakX[0])
+        motakX = OptionMenu(bilaketaFrame, aldagaiaX, aukerakX[0], *aukerakX)
+        motakX.grid()
+        aukerakY=["Abiadura","Pultsazioa","Altitudea"]
+        aldagaiaY = StringVar(bilaketaFrame)
+        aldagaiaY.set(aukerakY[0])
+        motakY = OptionMenu(bilaketaFrame, aldagaiaY, aukerakY[0], *aukerakY)
+        motakY.grid()
+        erakutsi = Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, aldagaiaX.get(), aldagaiaY.get()))
+        erakutsi.grid()
+  
+        self.grafikoaErakutsi(entrenamendua, "Denbora", "Abiadura")
 
         self.window.mainloop()
 
     def entrenamenduaErakutsi(self,entrenamendua):
-        frameID = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameID.grid()
-        id = Label(frameID,text=f"ID: {entrenamendua.ID}")
+        frameEntr= tk.Frame(self.frameNagusia)
+        frameEntr.grid_rowconfigure(1, weight=1)
+        frameEntr.grid_columnconfigure(1, weight=1)
+        frameEntr.grid(pady=25)
+        frameID = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameID.grid(row=0,column=0,sticky="ew")
+        t1 = tk.Label(frameID,text="___________ID___________",bg="gray")
+        id = tk.Label(frameID,text=entrenamendua.ID)
+        t1.grid()
         id.grid()
-        frameIkus = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameIkus.grid()
-        ikusgarritasuna = Label(frameIkus,text=f"Ikugarritasuna: {entrenamendua.ikusgarritasuna}")
+        frameIkus = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameIkus.grid(row=0,column=1,sticky="ew")
+        t2 = tk.Label(frameIkus,text="______Ikusgarritasuna______",bg="gray")
+        ikusgarritasuna = tk.Label(frameIkus,text=entrenamendua.ikusgarritasuna)
+        t2.grid()
         ikusgarritasuna.grid()
-        frameIzena = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameIzena.grid()
-        izena = Label(frameIzena,text=f"Izena: {entrenamendua.izena}")
+        frameIzena = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameIzena.grid(row=0,column=2,sticky="ew")
+        t3 = tk.Label(frameIzena,text="_________Izena_________",bg="gray")
+        izena = tk.Label(frameIzena,text=entrenamendua.izena)
+        t3.grid()
         izena.grid()
-        frameData = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameData.grid()
-        data = Label(frameData,text=f"Data: {entrenamendua.hasieraData}")
+        frameData = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameData.grid(row=0,column=3,sticky="ew")
+        t4 = tk.Label(frameData,text="__________Data__________",bg="gray")
+        data = tk.Label(frameData,text=entrenamendua.hasieraData)
+        t4.grid()
         data.grid()
-        frameMota = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameMota.grid()
-        mota = Label(frameMota,text=f"Mota: {entrenamendua.mota}")
+        frameMota = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameMota.grid(row=1,column=0,sticky="ew")
+        t5 = tk.Label(frameMota,text="_________Mota__________",bg="gray")
+        mota = tk.Label(frameMota,text=entrenamendua.mota)
+        t5.grid()
         mota.grid()
-        frameDis = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameDis.grid()
-        distantzia = Label(frameDis,text=f"Distantzia: {entrenamendua.distantzia}m")
+        frameDis = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameDis.grid(row=1,column=1,sticky="ew")
+        t6 = tk.Label(frameDis,text="________Distantzia_________",bg="gray")
+        distantzia = tk.Label(frameDis,text=entrenamendua.distantzia)
+        t6.grid()
         distantzia.grid()
-        frameDenb = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameDenb.grid()
-        denbora = Label(frameDenb,text=f"Denbora: {entrenamendua.denbora} segundu")
+        frameDenb = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameDenb.grid(row=1,column=2,sticky="ew")
+        t7 = tk.Label(frameDenb,text="_______Denbora________",bg="gray")
+        denbora = tk.Label(frameDenb,text=entrenamendua.denbora)
+        t7.grid()
         denbora.grid()
-        frameAbMax = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameAbMax.grid()
-        abiaduraMax = Label(frameAbMax,text=f"AbiaduraMax: {entrenamendua.abiaduraMax}m/s")
+        frameAbMax = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameAbMax.grid(row=1,column=3,sticky="ew")
+        t8 = tk.Label(frameAbMax,text="______AbiaduraMax______",bg="gray")
+        abiaduraMax = tk.Label(frameAbMax,text=entrenamendua.abiaduraMax)
+        t8.grid()
         abiaduraMax.grid()
-        frameAbBzb = tk.Frame(self.frameNagusia,relief=RAISED,bd=3,bg='yellow')
-        frameAbBzb.grid()
-        abiaduraBzb = Label(frameAbBzb,text=f"AbiaduraBzb: {entrenamendua.abiaduraBzb}m/s")
+        frameAbBzb = tk.Frame(frameEntr,relief=RAISED,bd=3)
+        frameAbBzb.grid(row=2,column=0,sticky="ew")
+        t9 = tk.Label(frameAbBzb,text="______AbiaduraBzb______",bg="gray")
+        abiaduraBzb = tk.Label(frameAbBzb,text=entrenamendua.abiaduraBzb)
+        t9.grid()
         abiaduraBzb.grid()
 
-    def grafikoaErakutsi(self,entrenamendua):
-        denborak = entrenamendua.streamDenborak.replace('[','')
-        denborak = denborak.replace(']','')
-        denborak = denborak.split(', ')
-        abiadurak = entrenamendua.streamAbiadurak.replace('[','')
-        abiadurak = abiadurak.replace(']','')
-        abiadurak = abiadurak.split(', ')
+    def grafikoaErakutsi(self,entrenamendua,xAld,yAld):
+        if self.canvas != None:
+            self.canvas.get_tk_widget().grid_forget()
+        if xAld == "Denbora":
+            xTmp = entrenamendua.streamDenborak.replace('[','')
+            xTmp = xTmp.replace(']','')
+            xTmp = xTmp.split(', ')
+        elif xAld == "Distantzia":
+            xTmp = entrenamendua.streamDistantziak.replace('[','')
+            xTmp = xTmp.replace(']','')
+            xTmp = xTmp.split(', ')
+        if yAld == "Abiadura":
+            yTmp = entrenamendua.streamAbiadurak.replace('[','')
+            yTmp = yTmp.replace(']','')
+            yTmp = yTmp.split(', ')
+        elif yAld == "Pultsazioa":
+            yTmp = entrenamendua.streamPultsazioak.replace('[','')
+            yTmp = yTmp.replace(']','')
+            yTmp = yTmp.split(', ')
+        elif yAld == "Altitudea":
+            yTmp = entrenamendua.streamAltitudeak.replace('[','')
+            yTmp = yTmp.replace(']','')
+            yTmp = yTmp.split(', ')
         x = []
         y = []
         sartu = True #Puntu gehiegi ez egoteko grafikoan (ez da ondo ikusten grafikoa puntu askorekin)
-        for denb in denborak:
+        for bal in xTmp:
             if(sartu):
-                x.append(int(denb))
+                x.append(float(bal))
                 sartu = False
             else:
                 sartu = True
+
         sartu = True
-        for ab in abiadurak:
+        for bal in yTmp:
             if(sartu):
-                y.append(float(ab))
+                y.append(float(bal))
                 sartu = False
             else:
                 sartu = True
-        fig = Figure(figsize = (10,5),dpi=100)
+
+        fig = Figure(figsize = (15,5),dpi=100)
         g = fig.add_subplot(111)
         g.plot(x,y)
-        g.set_ylabel("Abiadura(m/s)", fontsize=14)
-        g.set_xlabel("Denbora(s)", fontsize=14)
-        canvas = FigureCanvasTkAgg(fig,master = self.frameNagusia)  
-        canvas.draw()
-        # placing the canvas on the Tkinter window
-        canvas.get_tk_widget().grid(pady=5)
+        g.set_ylabel(yAld, fontsize=14)
+        g.set_xlabel(xAld, fontsize=14)
+        self.canvas = FigureCanvasTkAgg(fig,master = self.frameNagusia)  
+        self.canvas.draw()
+        self.canvas.get_tk_widget().grid(pady=5)
 
     def bueltakErakutsi(self,entrenamendua):
         bueltak = kudeatzaile.entrenamenduarenBueltakIkusi(entrenamendua)
@@ -110,10 +167,10 @@ class EntrenamenduLeihoa():
         taula = ttk.Treeview(self.frameNagusia, columns=(0,1,2,3,4), show='headings')
 
         for i,g in enumerate(goiburuak):
-            taula.column(f"#{i}", minwidth=0, width=200)
+            taula.column(f"#{i}", minwidth=0, width=300)
             taula.heading(i, text=g)
 
         for i,d in enumerate(datuak):
             taula.insert(parent='', index=i, iid=i, values=d)
             
-        taula.grid(pady=5)
+        taula.grid(pady=15)
