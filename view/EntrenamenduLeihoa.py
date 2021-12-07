@@ -14,6 +14,7 @@ import os
 import urllib.parse
 import urllib3
 from PIL import Image, ImageTk
+from view.BueltaLeihoa import BueltaLeihoa
 import io
 dirname = os.path.dirname(__file__)
 
@@ -166,6 +167,7 @@ class EntrenamenduLeihoa():
 
         goiburuak = ["Izena", "Distantzia(m)", "Denbora(s)", "AbiaduraBzb(m/s)", "PultsazioaBzb"]
         taula = ttk.Treeview(self.frameNagusia, columns=(0,1,2,3,4), show='headings')
+        taula.bind("<Double-1>", lambda ev: self.bueltaBistaratu(entrenamendua, bueltak[int(taula.selection()[0])]))
 
         for i,g in enumerate(goiburuak):
             taula.column(f"#{i}", minwidth=0, width=300)
@@ -196,3 +198,6 @@ class EntrenamenduLeihoa():
         panel = tk.Label(self.frameNagusia, image=self.img2)
         # bistaratu
         panel.grid(pady=25)
+
+    def bueltaBistaratu(self,entrenamendua,buelta):
+        BueltaLeihoa(entrenamendua,buelta)

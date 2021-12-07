@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS `Buelta` (
   `abiaduraMax` float DEFAULT NULL,
   `pultsazioBzb` float DEFAULT NULL,
   `pultsazioMax` float DEFAULT NULL,
+  `streamStartIndex` int DEFAULT NULL,
+  `streamEndIndex` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   /*KEY `IDEntrena` (`IDEntrena`),*/
   CONSTRAINT `Buelta_ibfk_1` FOREIGN KEY (`IDEntrena`) REFERENCES `Entrenamendua` (`ID`)

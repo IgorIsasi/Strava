@@ -84,12 +84,13 @@ def getActivitiesId(id):
         abiaduraMaxBu=buelta['max_speed']
         pultsazioBzbBu='NULL'
         pultsazioMaxBu='NULL'
-
         if(heartrateDauka):
             pultsazioBzbBu=buelta['average_heartrate']
             pultsazioMaxBu=buelta['max_heartrate']
+        streamStartIndexBu=buelta['start_index']
+        streamEndIndexBu=buelta['end_index']
 
-        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu)
+        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu,streamStartIndexBu,streamEndIndexBu)
 
     #SEGMENTUETARAKO
     segmentuak=jardueraXehetasunekin['segment_efforts']

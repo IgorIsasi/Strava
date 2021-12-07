@@ -50,8 +50,8 @@ class DBKudeatzailea:
     def komentarioaBidali(self,izena,abizena,testua,ID,data):
         self.kur.execute(f"INSERT OR REPLACE INTO Komentario(komentarioIgorleIzena, komentarioIgorleAbizena, komentarioTestua, komentarioId, komentarioData) VALUES('{izena}', '{abizena}', '{testua}', '{ID}', '{data}')")
 
-    def bueltaBidali(self,ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax):
-        self.kur.execute(f"INSERT OR REPLACE INTO Buelta(ID, denbora, IDEntrena, izena, distantzia, dataOrdua, abiaduraBzb, abiaduraMax, pultsazioBzb, pultsazioMax) VALUES('{ID}', {denbora}, '{IDEntrena}', '{izena}', {distantzia}, '{dataOrdua}', {abiaduraBzb}, {abiaduraMax}, {pultsazioBzb}, {pultsazioMax})")
+    def bueltaBidali(self,ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex):
+        self.kur.execute(f"INSERT OR REPLACE INTO Buelta(ID, denbora, IDEntrena, izena, distantzia, dataOrdua, abiaduraBzb, abiaduraMax, pultsazioBzb, pultsazioMax, streamStartIndex, streamEndIndex) VALUES('{ID}', {denbora}, '{IDEntrena}', '{izena}', {distantzia}, '{dataOrdua}', {abiaduraBzb}, {abiaduraMax}, {pultsazioBzb}, {pultsazioMax}, {streamStartIndex}, {streamEndIndex})")
 
     def medizioaBidali(self,dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax):
         self.kur.execute(f"INSERT OR REPLACE INTO Medizioak(dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax) VALUES('{dataOrdua}', '{IDBuelta}', {pultsazioBzb}, {pultsazioMax}, {abiaduraBzb}, {abiaduraMax})")
@@ -151,7 +151,9 @@ class DBKudeatzailea:
             abiaduraMax = atributuak[7]
             pultsazioBzb= atributuak[8]
             pultsazioMax = atributuak[9]
-            buel = Buelta.Buelta(ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax)
+            streamStartIndex = atributuak[10]
+            streamEndIndex = atributuak[11]
+            buel = Buelta.Buelta(ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex)
             bueltak.append(buel)
         return bueltak
 
