@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS `Entrenamendua` (
   `streamPultsazioak` JSON DEFAULT NULL,
   `streamAltitudeak` JSON DEFAULT NULL,
   `mapa` varchar(1000) DEFAULT NULL,
+  `streamLatLng` JSON DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) 
 /*!40101 SET character_set_client = @saved_cs_client */;

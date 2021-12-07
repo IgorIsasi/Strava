@@ -41,8 +41,8 @@ class DBKudeatzailea:
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
 
-    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa):
-        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak, mapa) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}', '{mapa}')")
+    def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng):
+        self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak, mapa, streamLatLng) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}', '{mapa}', '{streamLatLng}')")
 
     def jarraitzaileaBidali(self,izena,abizena):
         self.kur.execute(f"INSERT OR REPLACE INTO Jarraitzaile(izena, abizena) VALUES('{izena}', '{abizena}')")
