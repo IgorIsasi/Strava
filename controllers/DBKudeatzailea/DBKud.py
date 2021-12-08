@@ -63,7 +63,7 @@ class DBKudeatzailea:
         self.kur.execute(f"self,izena,abizena,testua,ID,data FROM Komentario WHERE izena='{izena}' AND abizena='{abizena}' AND testua='{testua}' AND ID='{ID}' AND data='{data}'")
         emaitza=self.kur.fetchall()
         if len(emaitza)==0:
-            self.entrenamenduaBidali(self,izena,abizena,testua,ID,data)
+            self.entrenamenduaBidali(izena,abizena,testua,ID,data)
 
     def komentarioaBidali(self,izena,abizena,testua,ID,data):
         self.kur.execute(f"INSERT OR REPLACE INTO Komentario(komentarioIgorleIzena, komentarioIgorleAbizena, komentarioTestua, komentarioId, komentarioData) VALUES('{izena}', '{abizena}', '{testua}', '{ID}', '{data}')")
@@ -80,10 +80,10 @@ class DBKudeatzailea:
     
     #SEGMENTUA#
     def segmentuaKonprobatu(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua):
-        self.kur.execute(f"SELECT self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua FROM Segmentua WHERE ID='{ID}' AND denbora='{denbora}' AND izena='{izena}' AND distantzia='{distantzia}' AND hasieraData={hasieraData} AND IDEntrenamendua='{IDEntrenamendua}'")
+        self.kur.execute(f"SELECT ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua FROM Segmentua WHERE ID='{ID}' AND denbora={denbora} AND izena='{izena}' AND distantzia={distantzia} AND hasieraData='{hasieraData}' AND IDEntrenamendua='{IDEntrenamendua}'")
         emaitza=self.kur.fetchall()
         if len(emaitza)==0:
-            self.bueltaBidali(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua)
+            self.segmentuaBidali(ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua)
 
     def segmentuaBidali(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua):
         self.kur.execute(f"INSERT OR REPLACE INTO Segmentua(ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua) VALUES('{ID}', {denbora}, '{izena}', {distantzia}, '{hasieraData}', '{IDEntrenamendua}')")
@@ -94,7 +94,6 @@ class DBKudeatzailea:
     def entrenamenduakIkusi(self):
         self.kur.execute("SELECT * FROM Entrenamendua")
         entrenamenduak = []
-        i = 0
         for atributuak in self.kur:
             ID = atributuak[0]
             mota = atributuak[1]
@@ -113,14 +112,12 @@ class DBKudeatzailea:
             mapa = atributuak[14]
             entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
             entrenamenduak.append(entr)
-            i=i+1
         return entrenamenduak
 
     def entrenamenduakBilatu(self, noiztik, nora, mota):
         entrenamenduak=[]
         if mota == "Guztiak":
             self.kur.execute(f"SELECT * FROM Entrenamendua WHERE hasieraData>='{noiztik}' AND hasieraData<='{nora}'")
-            i = 0
             for atributuak in self.kur:
                 ID = atributuak[0]
                 mota = atributuak[1]
@@ -139,10 +136,8 @@ class DBKudeatzailea:
                 mapa = atributuak[14]
                 entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
                 entrenamenduak.append(entr)
-                i=i+1
         else:
             self.kur.execute(f"SELECT * FROM Entrenamendua WHERE mota='{mota}' AND hasieraData>='{noiztik}' AND hasieraData<='{nora}'")
-            i = 0
             for atributuak in self.kur:
                 ID = atributuak[0]
                 mota = atributuak[1]
@@ -161,14 +156,12 @@ class DBKudeatzailea:
                 mapa = atributuak[14]
                 entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
                 entrenamenduak.append(entr)
-                i=i+1
         return entrenamenduak
 
     def entrenamenduarenBueltakIkusi(self,entrenamendua):
         IDEntrena = entrenamendua.ID
         self.kur.execute(f"SELECT * FROM Buelta WHERE IDEntrena='{IDEntrena}'")
         bueltak = []
-        i = 0
         for atributuak in self.kur:
             ID = atributuak[0]
             denbora = atributuak[1]
@@ -189,7 +182,6 @@ class DBKudeatzailea:
     def ekipamenduenDistantziaIkusi(self):
         ekipamenduak = []
         self.kur.execute("SELECT * FROM Ekipamendua")
-        i = 0
         for atributuak in self.kur:
             ID = atributuak[0]
             marka = atributuak[1]
