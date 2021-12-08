@@ -26,35 +26,64 @@ class DBKudeatzailea:
         for x in self.kur:
             print(x)
 
+    ####DATUAK DATU BASERA BIDALI   
+
+    #EKIPAMENDUA#
     def ekipamenduaKonprobatu(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"SELECT ID,marka,modelo,izena,distantzia FROM Ekipamendua WHERE ID='{ID}' AND marka='{marka}' AND modelo='{modelo}' AND izena='{izena}' AND distantzia='{distantzia}'")
-        #print(self.kur.description)
-        emaitza=len(self.kur.description)
-        if emaitza==0:
-            #print("Datua ez zegoen beraz bidaliko dut")
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
             self.ekipamenduaBidali(ID,marka,modelo,izena,distantzia)
-        #else:
-            #print("Datua bazegoen beraz ez dut bidaliko")
-            
-
-    #DATUAK DATU BASERA BIDALI     
+                 
     def ekipamenduaBidali(self,ID,marka,modelo,izena,distantzia):
         self.kur.execute(f"INSERT OR REPLACE INTO Ekipamendua(ID, marka, modelo, izena, distantzia) VALUES('{ID}', '{marka}', '{modelo}', '{izena}', {distantzia})")
+
+    #ENTRENAMENDUA#
+    def entrenamenduaKonprobatu(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng):
+        self.kur.execute(f"SELECT ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng FROM Entrenamendua WHERE ID='{ID}' AND mota='{mota}' AND denbora={denbora} AND izena='{izena}' AND hasieraData='{hasieraData}' AND distantzia={distantzia} AND ikusgarritasuna='{ikusgarritasuna}' AND abiaduraBzb={abiaduraBzb} AND abiaduraMax={abiaduraMax} AND streamDenborak='{streamDenborak}' AND streamDistantziak='{streamDistantziak}' AND streamAbiadurak='{streamAbiadurak}' AND streamPultsazioak='{streamPultsazioak}' AND streamAltitudeak='{streamAltitudeak}' AND mapa='{mapa}' AND streamLatLng='{streamLatLng}'")
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
+            self.entrenamenduaBidali(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng)
 
     def entrenamenduaBidali(self,ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng):
         self.kur.execute(f"INSERT OR REPLACE INTO Entrenamendua(ID, mota, denbora, izena, hasieraData, distantzia, ikusgarritasuna, abiaduraBzb, abiaduraMax, streamDenborak, streamDistantziak, streamAbiadurak, streamPultsazioak, streamAltitudeak, mapa, streamLatLng) VALUES('{ID}', '{mota}', {denbora}, '{izena}', '{hasieraData}', {distantzia}, '{ikusgarritasuna}', {abiaduraBzb}, {abiaduraMax}, '{streamDenborak}', '{streamDistantziak}', '{streamAbiadurak}', '{streamPultsazioak}', '{streamAltitudeak}', '{mapa}', '{streamLatLng}')")
 
+    #JARRAITZAILEA#
+    def jarraitzaileaKonprobatu(self,izena,abizena):
+        self.kur.execute(f"SELECT izena,abizena FROM Jarraitzaile WHERE izena='{izena}' AND abizena='{abizena}'")       
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
+            self.jarraitzaileaBidali(izena,abizena)
+
     def jarraitzaileaBidali(self,izena,abizena):
         self.kur.execute(f"INSERT OR REPLACE INTO Jarraitzaile(izena, abizena) VALUES('{izena}', '{abizena}')")
+
+    #KOMENTARIOA#
+    def komentarioaKonprobatu(self,izena,abizena,testua,ID,data):
+        self.kur.execute(f"self,izena,abizena,testua,ID,data FROM Komentario WHERE izena='{izena}' AND abizena='{abizena}' AND testua='{testua}' AND ID='{ID}' AND data='{data}'")
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
+            self.entrenamenduaBidali(self,izena,abizena,testua,ID,data)
 
     def komentarioaBidali(self,izena,abizena,testua,ID,data):
         self.kur.execute(f"INSERT OR REPLACE INTO Komentario(komentarioIgorleIzena, komentarioIgorleAbizena, komentarioTestua, komentarioId, komentarioData) VALUES('{izena}', '{abizena}', '{testua}', '{ID}', '{data}')")
 
+    #BUELTA#
+    def bueltaKonprobatu(self,ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex):
+        self.kur.execute(f"SELECT ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex FROM Buelta WHERE ID='{ID}' AND denbora='{denbora}' AND IDEntrena='{IDEntrena}' AND izena='{izena}' AND distantzia={distantzia} AND dataOrdua='{dataOrdua}' AND abiaduraBzb={abiaduraBzb} AND abiaduraMax={abiaduraMax} AND pultsazioBzb={pultsazioBzb} AND pultsazioMax={pultsazioMax} AND streamStartIndex='{streamStartIndex}' AND streamEndIndex='{stravaApiKud}'")
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
+            self.bueltaBidali(ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex)
+
     def bueltaBidali(self,ID,denbora,IDEntrena,izena,distantzia,dataOrdua,abiaduraBzb,abiaduraMax,pultsazioBzb,pultsazioMax,streamStartIndex,streamEndIndex):
         self.kur.execute(f"INSERT OR REPLACE INTO Buelta(ID, denbora, IDEntrena, izena, distantzia, dataOrdua, abiaduraBzb, abiaduraMax, pultsazioBzb, pultsazioMax, streamStartIndex, streamEndIndex) VALUES('{ID}', {denbora}, '{IDEntrena}', '{izena}', {distantzia}, '{dataOrdua}', {abiaduraBzb}, {abiaduraMax}, {pultsazioBzb}, {pultsazioMax}, {streamStartIndex}, {streamEndIndex})")
-
-    def medizioaBidali(self,dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax):
-        self.kur.execute(f"INSERT OR REPLACE INTO Medizioak(dataOrdua,IDBuelta,pultsazioBzb,pultsazioMax,abiaduraBzb,abiaduraMax) VALUES('{dataOrdua}', '{IDBuelta}', {pultsazioBzb}, {pultsazioMax}, {abiaduraBzb}, {abiaduraMax})")
+    
+    #SEGMENTUA#
+    def segmentuaKonprobatu(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua):
+        self.kur.execute(f"SELECT self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua FROM Segmentua WHERE ID='{ID}' AND denbora='{denbora}' AND izena='{izena}' AND distantzia='{distantzia}' AND hasieraData={hasieraData} AND IDEntrenamendua='{IDEntrenamendua}'")
+        emaitza=self.kur.fetchall()
+        if len(emaitza)==0:
+            self.bueltaBidali(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua)
 
     def segmentuaBidali(self,ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua):
         self.kur.execute(f"INSERT OR REPLACE INTO Segmentua(ID,denbora,izena,distantzia,hasieraData,IDEntrenamendua) VALUES('{ID}', {denbora}, '{izena}', {distantzia}, '{hasieraData}', '{IDEntrenamendua}')")

@@ -30,8 +30,8 @@ def getActivitiesId(id):
         modeloEk=ekipamendua['model_name']
         izenaEk=ekipamendua['nickname']
         distantziaEk=ekipamendua['converted_distance']
-        kudeatzaile.ekipamenduaBidali(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
-        #kudeatzaile.ekipamenduaKonprobatu(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
+        #kudeatzaile.ekipamenduaBidali(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
+        kudeatzaile.ekipamenduaKonprobatu(idEk,markaEk,modeloEk,izenaEk,distantziaEk)
 
 
     #ENTRENAMENDURAKO
@@ -54,7 +54,8 @@ def getActivitiesId(id):
     mapaEn=jardueraXehetasunekin['map']['polyline']
     streamLatLngEn=stream['latlng']['data']
 
-    kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn,streamLatLngEn)
+    #kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn,streamLatLngEn)
+    kudeatzaile.entrenamenduaKonprobatu(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn,streamLatLngEn)
     
 
     #KUDOS-ERAKO
@@ -63,14 +64,16 @@ def getActivitiesId(id):
         izenaJarr=komentario["athlete"]["firstname"]
         abizenaJarr=komentario["athlete"]["lastname"]
 
-        kudeatzaile.jarraitzaileaBidali(izenaJarr,abizenaJarr)
+        #kudeatzaile.jarraitzaileaBidali(izenaJarr,abizenaJarr)
+        kudeatzaile.jarraitzaileaKonprobatu(izenaJarr,abizenaJarr)
 
         #KOMENTARIOETARAKO
         idKom=komentario['id']
         testuaKom=komentario["text"]
         dataKom=komentario["created_at"]
 
-        kudeatzaile.komentarioaBidali(izenaJarr,abizenaJarr,testuaKom,idKom,dataKom)
+        #kudeatzaile.komentarioaBidali(izenaJarr,abizenaJarr,testuaKom,idKom,dataKom)
+        kudeatzaile.komentarioaKonprobatu(izenaJarr,abizenaJarr,testuaKom,idKom,dataKom)
 
 
     #BUELTETARAKO  //TODO BERRIRO PLANTEATU
@@ -91,7 +94,8 @@ def getActivitiesId(id):
         streamStartIndexBu=buelta['start_index']
         streamEndIndexBu=buelta['end_index']
 
-        kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu,streamStartIndexBu,streamEndIndexBu)
+        #kudeatzaile.bueltaBidali(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu,streamStartIndexBu,streamEndIndexBu)
+        kudeatzaile.bueltaKonprobatu(idBu,denboraBu,idEn,izenaBu,distantziaBu,dataOrduaBu,abiaduraBzbBu,abiaduraMaxBu,pultsazioBzbBu,pultsazioMaxBu,streamStartIndexBu,streamEndIndexBu)
 
     #SEGMENTUETARAKO
     segmentuak=jardueraXehetasunekin['segment_efforts']
@@ -102,4 +106,5 @@ def getActivitiesId(id):
         hasieraDataSeg=segmentua['start_date_local']
         denboraSeg=segmentua['elapsed_time']
 
-        kudeatzaile.segmentuaBidali(idSeg,denboraSeg,izenaSeg,distantziaSeg,hasieraDataSeg,idEn)
+        #kudeatzaile.segmentuaBidali(idSeg,denboraSeg,izenaSeg,distantziaSeg,hasieraDataSeg,idEn)
+        kudeatzaile.segmentuaKonprobatu(idSeg,denboraSeg,izenaSeg,distantziaSeg,hasieraDataSeg,idEn)
