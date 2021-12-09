@@ -1,11 +1,6 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
-from tkinter.constants import RAISED
-from tkinter.ttk import *
+import tkinter.ttk as ttk
 from controllers.DBKudeatzailea.DBKud import kudeatzaile
-import os
-dirname = os.path.dirname(__file__)
 
 
 class EkipamenduLeihoa:
@@ -13,7 +8,6 @@ class EkipamenduLeihoa:
         self.window = tk.Toplevel()
         self.window.geometry('600x250')
         self.window.title("Ekipamenduak")
-        #self.frameNagusia = Frame(self.window)
         datuak = []
         ekipamenduak = kudeatzaile.ekipamenduenDistantziaIkusi()
         for ekipamendu in ekipamenduak:

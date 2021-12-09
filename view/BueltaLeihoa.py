@@ -1,17 +1,8 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
 from tkinter.constants import RAISED
 from view import ScrollContainer
-from tkinter.ttk import *
-from controllers.DBKudeatzailea.DBKud import kudeatzaile
-import math
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
-NavigationToolbar2Tk)
-import os
-import urllib.parse
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 import urllib3
 import io
 from PIL import Image, ImageTk
@@ -28,19 +19,19 @@ class BueltaLeihoa():
         self.canvas = None
         self.bueltaErakutsi(buelta)
         #self.mapaErakutsi(entrenamendua,buelta)
-        bilaketaFrame = Frame(self.frameNagusia, width=500, height=150)
+        bilaketaFrame = tk.Frame(self.frameNagusia, width=500, height=150)
         bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
-        aldagaiaX = StringVar(bilaketaFrame)
+        aldagaiaX = tk.StringVar(bilaketaFrame)
         aldagaiaX.set(aukerakX[0])
-        motakX = OptionMenu(bilaketaFrame, aldagaiaX, aukerakX[0], *aukerakX)
+        motakX = tk.OptionMenu(bilaketaFrame, aldagaiaX, *aukerakX)
         motakX.grid()
         aukerakY=["Abiadura","Pultsazioa","Altitudea"]
-        aldagaiaY = StringVar(bilaketaFrame)
+        aldagaiaY = tk.StringVar(bilaketaFrame)
         aldagaiaY.set(aukerakY[0])
-        motakY = OptionMenu(bilaketaFrame, aldagaiaY, aukerakY[0], *aukerakY)
+        motakY = tk.OptionMenu(bilaketaFrame, aldagaiaY, *aukerakY)
         motakY.grid()
-        erakutsi = Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, buelta, aldagaiaX.get(), aldagaiaY.get()))
+        erakutsi = tk.Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, buelta, aldagaiaX.get(), aldagaiaY.get()))
         erakutsi.grid()
         self.grafikoaErakutsi(entrenamendua, buelta, "Denbora", "Abiadura")
         self.window.mainloop()

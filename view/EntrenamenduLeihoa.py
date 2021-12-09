@@ -1,22 +1,15 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
+import tkinter.ttk as ttk
 from tkinter.constants import RAISED
 from view import ScrollContainer
-from tkinter.ttk import *
 from controllers.DBKudeatzailea.DBKud import kudeatzaile
-import math
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
-NavigationToolbar2Tk)
-import os
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 import urllib.parse
 import urllib3
 from PIL import Image, ImageTk
 from view.BueltaLeihoa import BueltaLeihoa
 import io
-dirname = os.path.dirname(__file__)
 
 
 class EntrenamenduLeihoa():
@@ -32,19 +25,19 @@ class EntrenamenduLeihoa():
         self.entrenamenduaErakutsi(entrenamendua)
         self.bueltakErakutsi(entrenamendua)
         self.mapaErakutsi(entrenamendua)
-        bilaketaFrame = Frame(self.frameNagusia, width=500, height=150)
+        bilaketaFrame = tk.Frame(self.frameNagusia, width=500, height=150)
         bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
-        aldagaiaX = StringVar(bilaketaFrame)
+        aldagaiaX = tk.StringVar(bilaketaFrame)
         aldagaiaX.set(aukerakX[0])
-        motakX = OptionMenu(bilaketaFrame, aldagaiaX, aukerakX[0], *aukerakX)
+        motakX = tk.OptionMenu(bilaketaFrame, aldagaiaX, aukerakX[0], *aukerakX)
         motakX.grid()
         aukerakY=["Abiadura","Pultsazioa","Altitudea"]
-        aldagaiaY = StringVar(bilaketaFrame)
+        aldagaiaY = tk.StringVar(bilaketaFrame)
         aldagaiaY.set(aukerakY[0])
-        motakY = OptionMenu(bilaketaFrame, aldagaiaY, aukerakY[0], *aukerakY)
+        motakY = tk.OptionMenu(bilaketaFrame, aldagaiaY, *aukerakY)
         motakY.grid()
-        erakutsi = Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, aldagaiaX.get(), aldagaiaY.get()))
+        erakutsi = tk.Button(bilaketaFrame,text="Grafikoa erakutsi",command=lambda : self.grafikoaErakutsi(entrenamendua, aldagaiaX.get(), aldagaiaY.get()))
         erakutsi.grid()
         self.grafikoaErakutsi(entrenamendua, "Denbora", "Abiadura")
         self.window.mainloop()

@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import *
 from PIL import ImageTk, Image
 from controllers.DBKudeatzailea.DBKud import kudeatzaile
 from view.Menua import Menua
@@ -14,16 +13,16 @@ class OngiEtorri():
         self.window.title("Ongi etorri")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
-        testua = Label(self.frameNagusia,text="Kaixo!",font=("Times New Roman",25))
+        testua = tk.Label(self.frameNagusia,text="Kaixo!",font=("Times New Roman",25))
         testua.grid(column=1)
         irudia = Image.open(f"{dirname}/irudiak/IMG_strava.png")
         irudia = irudia.resize((450,400))
         irudiaTk = ImageTk.PhotoImage(irudia)
-        panel = Label(self.frameNagusia, image = irudiaTk)
+        panel = tk.Label(self.frameNagusia, image = irudiaTk)
         panel.grid(column=1)
-        botoia = Button(self.frameNagusia,text="Sartu", command=self.datuakKargatu)
+        botoia = tk.Button(self.frameNagusia,text="Sartu", command=self.datuakKargatu)
         botoia.grid(column=1, pady=5)
-        egileak = Label(self.frameNagusia,text="Egileak: Julen Fuentes, Markel Rubiños eta Igor Isasi")
+        egileak = tk.Label(self.frameNagusia,text="Egileak: Julen Fuentes, Markel Rubiños eta Igor Isasi")
         egileak.grid(column=1)
         self.window.mainloop()
 

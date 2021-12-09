@@ -1,6 +1,6 @@
 import sqlite3
 from controllers.StravaAPI import stravaApiKud
-from model import Ekipamendua,Jarraitzaile,Komentario,Buelta,Entrenamendua,Segmentua
+from model import Ekipamendua,Buelta,Entrenamendua
 
 class DBKudeatzailea:
     def konektatu(self):
