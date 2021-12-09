@@ -45,13 +45,21 @@ def getActivitiesId(id):
     ikusgarritasunaEn=jardueraXehetasunekin['visibility']
     abiaduraBzbEn=jardueraXehetasunekin['average_speed']
     abiaduraMaxEn=jardueraXehetasunekin['max_speed']
-    streamDenborakEn=stream["time"]["data"]
-    streamDistantziakEn=stream["distance"]["data"]
-    streamAbiadurakEn=stream["velocity_smooth"]["data"]
-    streamPultsazioakEn=stream["heartrate"]["data"]
-    streamAltitudeakEn=stream["altitude"]["data"]
     mapaEn=jardueraXehetasunekin['map']['polyline']
-    streamLatLngEn=stream['latlng']['data']
+    try:
+        streamDenborakEn=stream["time"]["data"]
+        streamDistantziakEn=stream['distance']['data']
+        streamAbiadurakEn=stream["velocity_smooth"]["data"]
+        streamPultsazioakEn=stream["heartrate"]["data"]
+        streamAltitudeakEn=stream["altitude"]["data"]
+        streamLatLngEn=stream['latlng']['data']
+    except:
+        streamDenborakEn=None
+        streamDistantziakEn=None
+        streamAbiadurakEn=None
+        streamPultsazioakEn=None
+        streamAltitudeakEn=None
+        streamLatLngEn=None
 
     #kudeatzaile.entrenamenduaBidali(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn,streamLatLngEn)
     kudeatzaile.entrenamenduaKonprobatu(idEn,motaEn,denboraEn,izenaEn,hasieraDataEn,distantziaEn,ikusgarritasunaEn,abiaduraBzbEn,abiaduraMaxEn,streamDenborakEn,streamDistantziakEn,streamAbiadurakEn,streamPultsazioakEn,streamAltitudeakEn,mapaEn,streamLatLngEn)
@@ -83,6 +91,8 @@ def getActivitiesId(id):
         distantziaBu=buelta['distance']
         denboraBu=buelta['elapsed_time']
         dataOrduaBu=buelta['start_date_local']
+        dataOrduaBu.replace('T', ' ')
+        dataOrduaBu.replace('Z', ' ')
         abiaduraBzbBu=buelta['average_speed']
         abiaduraMaxBu=buelta['max_speed']
         pultsazioBzbBu='NULL'

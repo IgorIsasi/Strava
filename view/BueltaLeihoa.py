@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 class BueltaLeihoa():
     def __init__(self,entrenamendua,buelta):
         self.window = tk.Toplevel()
-        self.window.geometry('1250x700')
+        self.window.geometry('1150x700')
         self.window.title("Buelta")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
@@ -18,7 +18,7 @@ class BueltaLeihoa():
         self.frameNagusia.grid_columnconfigure(1, weight=1)
         self.canvas = None
         self.bueltaErakutsi(buelta)
-        #self.mapaErakutsi(entrenamendua,buelta)
+        self.mapaErakutsi(entrenamendua,buelta)
         bilaketaFrame = tk.Frame(self.frameNagusia, width=500, height=150)
         bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
@@ -141,10 +141,11 @@ class BueltaLeihoa():
         latLng = latLng.replace(']','')
         latLng = latLng.split(', ')
         koordenatuak = []
-        for i in range(buelta.streamStartIndex,buelta.streamEndIndex):
+        for i in range(buelta.streamStartIndex * 2,(buelta.streamEndIndex + 1) * 2):
             koordenatuak.append(float(latLng[i]))
         polyline_ = self.posizioGeografikotikPolylinetara(koordenatuak)
-        print(polyline_)
+        #polyline_ = "syogGbvkQ????????????BA??BE@CBCBCBCBCBCBCBCBCDCDCDADADADADADADADADADABAD?D~~~BD~~BD@D@D@D@DBDBDBDBDBDBDBDBDBDBDDDDDDDDDDDDBDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBDDDDDBDBDBDBDBDBDBDBDBDBDBDBDBDBDBFBFBFBFBFBFBFBFBFBFBF@F@F@F@F@F@F@F@F@F@F@F@F~~BF~~BF~~BF~~BF~~BF~~BF?F?F?F?F~~BF?F?F?F?F?F?F?F?F?F?F?F?F?F?FAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFCFAFAFCFAFAFAFAFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCDCDCDCFCDCDCFCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDEDCDCDCDCDEDEDEDEDEDEDEDEDEBEDEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBE@E@E@E@E~~BE~~BE?E?EAEAECECECCECECGAGAGAG?G~~BG@G@G@GBGBEBEBEDCDCDCDADADADAF?D?D?F?D~~BF~~BF~~BF~~BD~~BF~~~B"
+        print("polyline",polyline_)
         token = "pk.eyJ1IjoiaWdvcmlzYXNpIiwiYSI6ImNrd3V4dGRncjFkaXIyb2xzODFjcWN1OGcifQ.izWu_zUPNQQw8eeqgCuKfg"
         strokeWidth = 1
         strokeColor = "f44"
@@ -154,6 +155,7 @@ class BueltaLeihoa():
         tamaina = "/auto/1000x550"
         url = f"{host}{path}{tamaina}?access_token={token}"
         em = http.request('GET', url)
+        print("em buelta:",em.data)
         # Irudiaren data irakurri eta argazkia sortu
         img = Image.open(io.BytesIO(em.data))
         # Tkinter en argazkia sortu
@@ -164,11 +166,17 @@ class BueltaLeihoa():
         # bistaratu
         panel.grid(pady=25)
 
-
     def posizioGeografikotikPolylinetara(self,koordenatuak):
         polyline = ''
-        for koord in koordenatuak:
+        lehenengoKoord = True #lehenengo koordenatuan ez da offset kalkulatu behar
+        for i in range(len(koordenatuak)):
+            if not(lehenengoKoord):
+                koord = koordenatuak[i] - koordenatuak[i-2] #offset kalkulatu
+            else:
+                koord = koordenatuak[i]
             polyline = polyline + self.kodifikatu(koord)
+            if i == 1: #i bikoitiak latitudeak izango dira eta bakoitiak longitudeak
+                lehenengoKoord = False
         return polyline
 
     def kodifikatu(self,zenb):
@@ -215,11 +223,12 @@ class BueltaLeihoa():
         polyline = ""
         for i in range (len(chunks)):
             chunks[i] = chunks[i][::-1] #chunk bakoitzaren biten ordena alderantziz jarri (lehendik alderantziz zeuden, orain orden egokian jarri)
-            chunks[i] = int(chunks[i],2) 
+            #print(chunks[i]) #chunk-aren balio bitarra
+            chunks[i] = int(chunks[i],2) #chunk-aren balioa hamartarrera pasatu
             if i < len(chunks)-1:
                 chunks[i] = chunks[i] | 0x20 #balioari OR 0x20 egin azkenengo chunk-a ez bada
             chunks[i] = int(chunks[i]) + 63 #balioari 63 gehitu
-            #print(chunks[i])
+            #print(chunks[i]) #chunk-aren balioa hamartarrean
             polyline = polyline + chr(int(chunks[i])) #chunk-en ASCII balioa string-ean sartu kateatuz
-        #print(polyline)
+        #print(zenb, ": ", polyline)
         return polyline

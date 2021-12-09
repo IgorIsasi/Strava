@@ -30,7 +30,7 @@ class EntrenamenduLeihoa():
         aukerakX=["Denbora","Distantzia"]
         aldagaiaX = tk.StringVar(bilaketaFrame)
         aldagaiaX.set(aukerakX[0])
-        motakX = tk.OptionMenu(bilaketaFrame, aldagaiaX, aukerakX[0], *aukerakX)
+        motakX = tk.OptionMenu(bilaketaFrame, aldagaiaX, *aukerakX)
         motakX.grid()
         aukerakY=["Abiadura","Pultsazioa","Altitudea"]
         aldagaiaY = tk.StringVar(bilaketaFrame)
@@ -177,6 +177,7 @@ class EntrenamenduLeihoa():
         strokeColor = "f44"
         http = urllib3.PoolManager()
         polyline_ = urllib.parse.quote_plus(entrenamendua.mapa)
+        print(polyline_)
         path = f"path-{strokeWidth}+{strokeColor}({polyline_})"
         host = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
         tamaina = "/auto/1000x550"
