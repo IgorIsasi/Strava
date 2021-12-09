@@ -82,7 +82,8 @@ class DBKudeatzailea:
             streamPultsazioak = atributuak[12]
             streamAltitudeak = atributuak[13]
             mapa = atributuak[14]
-            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
+            streamLatLng = atributuak[15]
+            entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng)
             entrenamenduak.append(entr)
             i=i+1
         return entrenamenduak
@@ -108,7 +109,8 @@ class DBKudeatzailea:
                 streamPultsazioak = atributuak[12]
                 streamAltitudeak = atributuak[13]
                 mapa = atributuak[14]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
+                streamLatLng = atributuak[15]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng)
                 entrenamenduak.append(entr)
                 i=i+1
         else:
@@ -130,7 +132,8 @@ class DBKudeatzailea:
                 streamPultsazioak = atributuak[12]
                 streamAltitudeak = atributuak[13]
                 mapa = atributuak[14]
-                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa)
+                streamLatLng = atributuak[15]
+                entr = Entrenamendua.Entrenamendua(ID,mota,denbora,izena,hasieraData,distantzia,ikusgarritasuna,abiaduraBzb,abiaduraMax,streamDenborak,streamDistantziak,streamAbiadurak,streamPultsazioak,streamAltitudeak,mapa,streamLatLng)
                 entrenamenduak.append(entr)
                 i=i+1
         return entrenamenduak

@@ -13,12 +13,13 @@ NavigationToolbar2Tk)
 import os
 import urllib.parse
 import urllib3
+import io
 from PIL import Image, ImageTk
 
 class BueltaLeihoa():
     def __init__(self,entrenamendua,buelta):
         self.window = tk.Toplevel()
-        self.window.geometry('1100x700')
+        self.window.geometry('1250x700')
         self.window.title("Buelta")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
@@ -26,6 +27,7 @@ class BueltaLeihoa():
         self.frameNagusia.grid_columnconfigure(1, weight=1)
         self.canvas = None
         self.bueltaErakutsi(buelta)
+        #self.mapaErakutsi(entrenamendua,buelta)
         bilaketaFrame = Frame(self.frameNagusia, width=500, height=150)
         bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
@@ -142,3 +144,95 @@ class BueltaLeihoa():
         self.canvas = FigureCanvasTkAgg(fig,master = self.frameNagusia)  
         self.canvas.draw()
         self.canvas.get_tk_widget().grid(pady=5)
+
+    def mapaErakutsi(self,entrenamendua,buelta):
+        latLng = entrenamendua.streamLatLng.replace('[','')
+        latLng = latLng.replace(']','')
+        latLng = latLng.split(', ')
+        koordenatuak = []
+        for i in range(buelta.streamStartIndex,buelta.streamEndIndex):
+            koordenatuak.append(float(latLng[i]))
+        polyline_ = self.posizioGeografikotikPolylinetara(koordenatuak)
+        print(polyline_)
+        token = "pk.eyJ1IjoiaWdvcmlzYXNpIiwiYSI6ImNrd3V4dGRncjFkaXIyb2xzODFjcWN1OGcifQ.izWu_zUPNQQw8eeqgCuKfg"
+        strokeWidth = 1
+        strokeColor = "f44"
+        http = urllib3.PoolManager()
+        path = f"path-{strokeWidth}+{strokeColor}({polyline_})"
+        host = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/"
+        tamaina = "/auto/1000x550"
+        url = f"{host}{path}{tamaina}?access_token={token}"
+        em = http.request('GET', url)
+        # Irudiaren data irakurri eta argazkia sortu
+        img = Image.open(io.BytesIO(em.data))
+        # Tkinter en argazkia sortu
+        # oso importantea self ekin gordetzea, bestela argazkia ezabatu egingo da.
+        self.img2 = ImageTk.PhotoImage(img)
+        # Label batean sartu
+        panel = tk.Label(self.frameNagusia, image=self.img2)
+        # bistaratu
+        panel.grid(pady=25)
+
+
+    def posizioGeografikotikPolylinetara(self,koordenatuak):
+        polyline = ''
+        for koord in koordenatuak:
+            polyline = polyline + self.kodifikatu(koord)
+        return polyline
+
+    def kodifikatu(self,zenb):    
+        balioa = round(zenb * 100000)
+        #print(balioa)
+        # 3. Balio dezimala binario bihurtu.
+        # Kontuan izan, balio negatibo bat, biren osagarriaren metodoa # erabiliz kalkulatu behar dela. Balio binarioa ezeztuz
+        # eta emaitzari bat gehituz.
+
+        if zenb < 0:
+            balioa = (1 << 32) + balioa
+        else:
+            if (balioa & (1 << (32 - 1))) != 0:
+                balioa = balioa - (1 << 32)
+        balioBitar=f"{balioa:016b}"
+        while len(balioBitar) < 32:
+            balioBitar = "0" + balioBitar
+        #print(balioBitar)
+        # 4. Mugitu bitak 1 ezkerrera
+        maskara = 2 ** len(balioBitar) - 1
+        balioBitar = format((int(balioBitar,2) << 1) & maskara,"b")
+        while len(balioBitar) < 32:
+            balioBitar = "0" + balioBitar
+        #print(balioBitar)
+        # 5. Jatorrizko balioa negatiboa bada, # balio binario ezeztu:
+        if zenb <0:
+            balioBitar = format(int(balioBitar,2) ^ 0xFFFFFFFF,"b")
+            while len(balioBitar) < 32:
+                balioBitar = "0" + balioBitar
+        #print(balioBitar)
+        # 6. Hartu bit-ak bostnaka geratzen den zenbakia > 0x20 den bitartean
+        #balioBitar=f"{balioa:016b}"
+        balioBitarAldrebes = balioBitar[::-1]
+        #print(balioBitarAldrebes)
+        #chunks = [balioBitarAldrebes[i:i+5] for i in range(0, len(balioBitarAldrebes), 5) % int(balioBitarAldrebes[i:i+5]) > 0]
+        chunks = []
+        sartu = True
+        for i  in range(0,len(balioBitarAldrebes),5):
+            #print(balioBitarAldrebes[i:i+5],int(balioBitarAldrebes[i:i+5]))
+            if (int(balioBitarAldrebes[i:i+5]) > 0) | (sartu == True):
+                chunks.append(balioBitarAldrebes[i:i+5])
+                if int(balioBitarAldrebes[i:i+5]) > 0: #azkenengo chunk hutsak ez sartu
+                    sartu = False
+            #else:
+                #print("ez da sartu",balioBitarAldrebes[i:i+5])
+        polyline = ""
+        for i in range (len(chunks)):
+            chunks[i] = chunks[i][::-1]
+            #print(chunks[i])
+            chunks[i] = int(chunks[i],2)
+            #print(chunks[i])
+            if i < len(chunks)-1:
+                chunks[i] = chunks[i] | 0x20
+            chunks[i] = int(chunks[i]) + 63
+            #print(chunks[i])
+            polyline = polyline + chr(int(chunks[i]))
+        #print(polyline)
+        return polyline
