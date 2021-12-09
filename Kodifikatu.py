@@ -1,17 +1,48 @@
+import tkinter as tk
+from tkinter.constants import RAISED
+from view import ScrollContainer
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
+import urllib3
+import io
+from PIL import Image, ImageTk
+
 def main():
     if __name__ == '__main__':
-        kodifikatu(-179.9832104)
-        kodifikatu(38.5)
-        kodifikatu(-120.2)
-        kodifikatu(40.7)
-        kodifikatu(-120.95)
-        kodifikatu(43.252)
-        kodifikatu(-126.453)       
+        koordenatuak = "[[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]]"
+        #posizioGeografikotikPolylinetara(koordenatuak)
+        mapaErakutsi(koordenatuak,0,2)
 
+def mapaErakutsi(streamLatLng,streamStartIndex,streamEndIndex):
+        latLng = streamLatLng.replace('[','')
+        latLng = latLng.replace(']','')
+        latLng = latLng.split(', ')
+        koordenatuak = []
+        for i in range((streamStartIndex)* 2,(streamEndIndex + 1) * 2):
+            koordenatuak.append(float(latLng[i]))
+        polyline_ = posizioGeografikotikPolylinetara(koordenatuak)
+        print(polyline_)
+
+
+def posizioGeografikotikPolylinetara(koordenatuak):
+        polyline = ''
+        lehenengoKoord = True #lehenengo koordenatuan ez da offset kalkulatu behar
+        for i in range(len(koordenatuak)):
+            if not(lehenengoKoord):
+                koord = koordenatuak[i] - koordenatuak[i-2] #offset kalkulatu
+                #print("koord",koord)
+            else:
+                koord = koordenatuak[i]
+            polyline = polyline + kodifikatu(koord)
+            if i == 1: #i bikoitiak latitudeak izango dira eta bakoitiak longitudeak
+                lehenengoKoord = False
+        #print("polyline",polyline)
+        return polyline
 
 def kodifikatu(zenb):
         # 2. Birderkatu zenbakia bider 1e5 eta borobildu    
         balioa = round(zenb * 100000)
+        #print("balioa",balioa)
         
         # Kontuan izan, balio negatibo bat, biren osagarriaren metodoa # erabiliz kalkulatu behar dela. Balio binarioa ezeztuz
         # eta emaitzari bat gehituz.
@@ -60,7 +91,7 @@ def kodifikatu(zenb):
             chunks[i] = int(chunks[i]) + 63 #balioari 63 gehitu
             #print(chunks[i]) #chunk-aren balioa hamartarrean
             polyline = polyline + chr(int(chunks[i])) #chunk-en ASCII balioa string-ean sartu kateatuz
-        print(zenb, ": ", polyline)
+        #print(zenb, ": ", polyline)
         return polyline
 
 main()
