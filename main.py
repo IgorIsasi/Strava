@@ -9,5 +9,4 @@ def main():
         #for jarduera in jarduerak:
             #print(stravaApiKud.getActivityStreams(jarduera["id"]))
         l=OngiEtorri()        
-        print("commit froga")
 main()
