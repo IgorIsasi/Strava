@@ -35,5 +35,3 @@ class OngiEtorri():
         tk.messagebox.showinfo(title="Datuak kargatuta", message="Datuak ongi kargatu dira!")
         self.window.destroy()
         Menua()
-        
-
