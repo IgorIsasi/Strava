@@ -11,7 +11,7 @@ class BueltaLeihoa():
     def __init__(self,entrenamendua,buelta):
         self.window = tk.Toplevel()
         leihoZabalera = 1150
-        leihoAltuera = 700
+        leihoAltuera = 850
         x = (self.window.winfo_screenwidth() // 2) - (leihoZabalera // 2)
         y = (self.window.winfo_screenheight() // 2) - (leihoAltuera // 2)
         self.window.geometry('{}x{}+{}+{}'.format(leihoZabalera, leihoAltuera, x, y))
@@ -22,7 +22,7 @@ class BueltaLeihoa():
         self.frameNagusia.grid_columnconfigure(1, weight=1)
         self.canvas = None
         self.bueltaErakutsi(buelta)
-        self.mapaErakutsi(entrenamendua,buelta)
+        #self.mapaErakutsi(entrenamendua,buelta)
         bilaketaFrame = tk.Frame(self.frameNagusia, width=500, height=150)
         bilaketaFrame.grid(pady=6)
         aukerakX=["Denbora","Distantzia"]
@@ -148,7 +148,6 @@ class BueltaLeihoa():
         for i in range(buelta.streamStartIndex * 2,(buelta.streamEndIndex + 1) * 2):
             koordenatuak.append(float(latLng[i]))
         polyline_ = self.posizioGeografikotikPolylinetara(koordenatuak)
-        #polyline_ = "syogGbvkQ????????????BA??BE@CBCBCBCBCBCBCBCBCDCDCDADADADADADADADADADABAD?D~~~BD~~BD@D@D@D@DBDBDBDBDBDBDBDBDBDBDDDDDDDDDDDDBDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBDDDDDBDBDBDBDBDBDBDBDBDBDBDBDBDBDBFBFBFBFBFBFBFBFBFBFBF@F@F@F@F@F@F@F@F@F@F@F@F~~BF~~BF~~BF~~BF~~BF~~BF?F?F?F?F~~BF?F?F?F?F?F?F?F?F?F?F?F?F?F?FAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFCFAFAFCFAFAFAFAFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCFCDCDCDCFCDCDCFCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDEDCDCDCDCDEDEDEDEDEDEDEDEDEBEDEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBE@E@E@E@E~~BE~~BE?E?EAEAECECECCECECGAGAGAG?G~~BG@G@G@GBGBEBEBEDCDCDCDADADADAF?D?D?F?D~~BF~~BF~~BF~~BD~~BF~~~B"
         print("polyline",polyline_)
         token = "pk.eyJ1IjoiaWdvcmlzYXNpIiwiYSI6ImNrd3V4dGRncjFkaXIyb2xzODFjcWN1OGcifQ.izWu_zUPNQQw8eeqgCuKfg"
         strokeWidth = 1
@@ -227,12 +226,9 @@ class BueltaLeihoa():
         polyline = ""
         for i in range (len(chunks)):
             chunks[i] = chunks[i][::-1] #chunk bakoitzaren biten ordena alderantziz jarri (lehendik alderantziz zeuden, orain orden egokian jarri)
-            #print(chunks[i]) #chunk-aren balio bitarra
             chunks[i] = int(chunks[i],2) #chunk-aren balioa hamartarrera pasatu
             if i < len(chunks)-1:
                 chunks[i] = chunks[i] | 0x20 #balioari OR 0x20 egin azkenengo chunk-a ez bada
             chunks[i] = int(chunks[i]) + 63 #balioari 63 gehitu
-            #print(chunks[i]) #chunk-aren balioa hamartarrean
             polyline = polyline + chr(int(chunks[i])) #chunk-en ASCII balioa string-ean sartu kateatuz
-        #print(zenb, ": ", polyline)
         return polyline
