@@ -4,7 +4,7 @@ from controllers.DBKudeatzailea.DBKud import kudeatzaile
 from view.EntrenamenduLeihoa import EntrenamenduLeihoa
 from view.EkipamenduLeihoa import EkipamenduLeihoa
 from view import ScrollContainer
-
+import datetime
 
 
 class Menua():
@@ -34,11 +34,11 @@ class Menua():
         aldagaiaMota.set(aukerakMota[0])
         motak = tk.OptionMenu(bilaketaFrame, aldagaiaMota, *aukerakMota)
         motak.grid()
-        noiztik = tk.Entry(bilaketaFrame, textvariable=tk.StringVar(value="Urtea-Hilabetea-Eguna"))
-        noiztik.grid()
-        nora = tk.Entry(bilaketaFrame, textvariable=tk.StringVar(value="Urtea-Hilabetea-Eguna"))
-        nora.grid()
-        bilatu = tk.Button(bilaketaFrame,text="Bilatu",command=lambda : self.entrenamenduakBilatu(noiztik.get(), nora.get(), aldagaiaMota.get()))
+        self.noiztik = tk.Entry(bilaketaFrame, textvariable=tk.StringVar(value="Urtea-Hilabetea-Eguna"))
+        self.noiztik.grid()
+        self.nora = tk.Entry(bilaketaFrame, textvariable=tk.StringVar(value="Urtea-Hilabetea-Eguna"))
+        self.nora.grid()
+        bilatu = tk.Button(bilaketaFrame,text="Bilatu",command=lambda : self.entrenamenduakBilatu(self.noiztik.get(), self.nora.get(), aldagaiaMota.get()))
         bilatu.grid()
         self.entrenamenduakIkusi() #Defektuz entrenamendu guztiak agertzeko
         self.window.mainloop()
@@ -83,6 +83,24 @@ class Menua():
             frame.grid_forget()
             frame.destroy()
         self.frames.clear()
+        #"noiztik" balioa desegokia bada, gaurko eguna aurreko urtean sartuko da 
+        print(noiztik)
+        print(nora)
+        try:
+            datetime.datetime.strptime(noiztik, "%Y-%m-%d")
+        except ValueError:
+            noiztik = datetime.datetime.now() - datetime.timedelta(days=1*365)
+            noiztik = noiztik.strftime("%Y-%m-%d")
+            self.noiztik.delete(0, "end")
+            self.noiztik.insert(0, noiztik)
+        #"nora" balioa desegokia bada, gaurko eguna
+        try:
+            datetime.datetime.strptime(nora, "%Y-%m-%d")
+        except ValueError:
+            nora = datetime.datetime.now()
+            nora = nora.strftime("%Y-%m-%d")
+            self.nora.delete(0, "end")
+            self.nora.insert(0, nora)
         entrenamenduak = kudeatzaile.entrenamenduakBilatu(noiztik,nora,mota)
         col = 0
         r = 2
