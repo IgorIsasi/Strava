@@ -6,7 +6,11 @@ from controllers.DBKudeatzailea.DBKud import kudeatzaile
 class EkipamenduLeihoa:
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('600x250')
+        leihoZabalera = 600
+        leihoAltuera = 250
+        x = (self.window.winfo_screenwidth() // 2) - (leihoZabalera // 2)
+        y = (self.window.winfo_screenheight() // 2) - (leihoAltuera // 2)
+        self.window.geometry('{}x{}+{}+{}'.format(leihoZabalera, leihoAltuera, x, y))
         self.window.title("Ekipamenduak")
         datuak = []
         ekipamenduak = kudeatzaile.ekipamenduenDistantziaIkusi()

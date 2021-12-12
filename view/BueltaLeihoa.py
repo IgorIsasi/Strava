@@ -10,7 +10,11 @@ from PIL import Image, ImageTk
 class BueltaLeihoa():
     def __init__(self,entrenamendua,buelta):
         self.window = tk.Toplevel()
-        self.window.geometry('1150x700')
+        leihoZabalera = 1150
+        leihoAltuera = 700
+        x = (self.window.winfo_screenwidth() // 2) - (leihoZabalera // 2)
+        y = (self.window.winfo_screenheight() // 2) - (leihoAltuera // 2)
+        self.window.geometry('{}x{}+{}+{}'.format(leihoZabalera, leihoAltuera, x, y))
         self.window.title("Buelta")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame

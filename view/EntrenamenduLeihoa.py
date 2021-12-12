@@ -15,7 +15,11 @@ import io
 class EntrenamenduLeihoa():
     def __init__(self,entrenamendua):
         self.window = tk.Toplevel()
-        self.window.geometry('1500x800')
+        leihoZabalera = 1500
+        leihoAltuera = 800
+        x = (self.window.winfo_screenwidth() // 2) - (leihoZabalera // 2)
+        y = (self.window.winfo_screenheight() // 2) - (leihoAltuera // 2)
+        self.window.geometry('{}x{}+{}+{}'.format(leihoZabalera, leihoAltuera, x, y))
         self.window.title("Entrenamendua")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame

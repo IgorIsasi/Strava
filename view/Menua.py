@@ -10,7 +10,11 @@ from view import ScrollContainer
 class Menua():
     def __init__(self):
         self.window = tk.Tk()
-        self.window.geometry('750x530')
+        leihoZabalera = 750
+        leihoAltuera = 530
+        x = (self.window.winfo_screenwidth() // 2) - (leihoZabalera // 2)
+        y = (self.window.winfo_screenheight() // 2) - (leihoAltuera // 2)
+        self.window.geometry('{}x{}+{}+{}'.format(leihoZabalera, leihoAltuera, x, y))
         self.window.title("Menua")
         scroll = ScrollContainer(self.window)
         self.frameNagusia = scroll.second_frame
